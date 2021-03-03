@@ -1,5 +1,16 @@
 package basic.server;
 
-public class ServerRequestHandler {
+import basic.RemoteError;
 
+public class ServerRequestHandler {
+	private InvokerRegistry invokerRegistry;
+	private ServerConfig serverConfig;
+	
+	public String receive(String message) throws RemoteError{
+		return "";
+	}
+	
+	private long decode(String message) throws RemoteError{
+		return 0;
+	}
 }

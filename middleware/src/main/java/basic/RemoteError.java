@@ -1,5 +1,5 @@
 package basic;
 
-public class RemoteError {
+public class RemoteError extends Exception {
 
 }
