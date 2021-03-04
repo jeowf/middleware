@@ -12,5 +12,8 @@ public class ServerRequestHandler {
 	
 	private long decode(String message) throws RemoteError{
 		return 0;
+		//usar string.replace
 	}
+	
+
 }
