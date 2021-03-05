@@ -2,6 +2,7 @@ package basic.server;
 
 import basic.Marshaller;
 import basic.RemoteError;
+import general.RequestorMessage;
 
 public class Invoker {
 	private long invokerID;
@@ -16,7 +17,11 @@ public class Invoker {
 
 	public Object invoke(String message) throws RemoteError {
 		
+		RequestorMessage rm = (RequestorMessage) marshaller.unmarshal(message, RequestorMessage.class);
 		
+		for(Object o : rm.getInvocationData().getArgs()) {
+			System.out.println(o.getClass().getName());
+		}
 		
 		return null;
 	}
