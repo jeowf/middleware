@@ -7,7 +7,17 @@ public class Invoker {
 	private long invokerID;
 	private Marshaller marshaller;
 	
+	
+	public Invoker(long invokerID) {
+		super();
+		this.invokerID = invokerID;
+		this.marshaller = new Marshaller();
+	}
+
 	public Object invoke(String message) throws RemoteError {
+		
+		
+		
 		return null;
 	}
 	

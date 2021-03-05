@@ -22,6 +22,7 @@ public class ServerRequestHandler {
 	
 	private static final int BUFFER_SIZE = 1024;
 	private Selector selector = null;
+	private String dataDecode = null;
 	
 	public void receive() throws RemoteError{
 		
@@ -70,7 +71,29 @@ public class ServerRequestHandler {
 	}
 	
 	private long decode(String message) throws RemoteError{
-		return 0;
+				
+		String idInvoker = message.substring(0, message.indexOf("{") - 1);
+		
+		long id;
+		
+		if(idInvoker.length() > 0) {
+			id = Long.parseLong(idInvoker);
+		}else {
+			id = -1;
+		}
+		
+		return id;
+	}
+	
+private String removeIdOfInvoker(String message) throws RemoteError{
+		
+		StringBuffer text = new StringBuffer(message);
+						
+		text.replace( 0 , text.indexOf("{", 0) - 1, "");
+		
+		dataDecode = text.toString();
+		
+		return dataDecode;
 		//usar string.replace
 	}
 	
@@ -97,12 +120,15 @@ public class ServerRequestHandler {
 			try {
 			logger(String.format("Message Received.....: %s\n", data));
 			
+			long id = decode(data);
 			
-			// int id = invokerRegistry.decode(data);
+			data = removeIdOfInvoker(data);
 			
-			// Invoker invoker = invokerRegistry.getInvoker(id);
+			//Invoker invoker = invokerRegistry.getInvoker(id);
 			
-			// Object obj = invoker.invoke(data')
+			logger(String.format("Message Change.....: %s\n", data));
+			
+			//Object obj = invoker.invoke(dataDecode);
 			
 			// enviar obj de volta para o client handler
 			
@@ -110,8 +136,6 @@ public class ServerRequestHandler {
 			srm.setObject("Recebido");
 			
 			Marshaller marshaller = new Marshaller();
-			
-			
 			
 			String message = marshaller.marshal(srm);	
 			
