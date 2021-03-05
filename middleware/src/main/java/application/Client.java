@@ -12,15 +12,29 @@ public class Client {
 		
 		Requestor r = new Requestor(crh, String.class);
 		
-		try {
-			System.out.println((String) r.invoke(0, "equals",
-					new Object[]{"p„o"}, 
+		UserProxy up = new UserProxy();
+		
+		up.setNome("Kevin Corno");
+		
+		System.out.println("Nome: " + up.getNome());
+		
+		up.setNome("RC");
+		
+		System.out.println("Nome: " + up.getNome());
+		
+		//System.out.println(up.getNome().);
 
-					new String[] {Object.class.getName()}));
-		} catch (RemoteError e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+//		
+//		try {
+//			System.out.println((String) r.invoke(0, "equals",
+//					new Object[]{"p√£o"}, 
+//
+//					new String[] {Object.class.getName()}));
+//		} catch (RemoteError e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 	}
 }

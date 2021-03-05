@@ -25,7 +25,7 @@ public class ServerRequestHandler {
 	private String dataDecode = null;
 	
 	public ServerRequestHandler() {
-		invokerRegistry = new InvokerRegistry();
+		invokerRegistry = InvokerRegistry.getInstance();
 		serverConfig = new ServerConfig();
 	}
 	
@@ -140,7 +140,8 @@ public class ServerRequestHandler {
 			// enviar obj de volta para o client handler
 			
 			ServerResponseMessage srm = new ServerResponseMessage();
-			srm.setObject("Recebido");
+			
+			srm.setObject(obj);
 			
 			Marshaller marshaller = new Marshaller();
 			

@@ -17,7 +17,7 @@ public class Invoker {
 		super();
 		this.invokerID = invokerID;
 		this.marshaller = new Marshaller();
-		this.il = new InstanceList();
+		this.il = InstanceList.getInstance();
 	}
 
 	public Object invoke(String message) throws RemoteError {
@@ -30,22 +30,28 @@ public class Invoker {
 			String[] argsTypes = rm.getInvocationData().getArgsTypes();
 			Object[] args = rm.getInvocationData().getArgs();
 			
-			Class<?>[] argsT = new Class<?>[argsTypes.length]; 
+			Class<?>[] argsT = null;
 			
-			for(int i = 0; i < argsTypes.length; i++) {
-				argsT[i] = Class.forName(argsTypes[i]);
+			if(argsTypes != null) {
+			
+				argsT = new Class<?>[argsTypes.length]; 
+				for(int i = 0; i < argsTypes.length; i++) {
+					argsT[i] = Class.forName(argsTypes[i]);
+				}
 			}
+			
 			
 			Class<?> objectClass = Class.forName(rm.getInvocationData().getObjectClass());
 			
 			Method method;
 			//String s = "pão";
 			try {
-				method = objectClass.getClass().getMethod(rm.getInvocationData().getSomeMethod(),	argsT);
+				System.out.println(objectClass.getName());
+				method = objectClass.getMethod(rm.getInvocationData().getSomeMethod(),	argsT);
+				System.out.println();
+				Object obj = il.getInstance(objectClass, rm.getInvocationData().getObjectID());
 				
-				Object obj = il.getInstance(objectClass.getClass(), rm.getInvocationData().getObjectID());
-				
-				invokeMethod(args, method, obj);
+				return invokeMethod(args, method, obj);
 				
 			} catch (SecurityException e) {
 				System.out.println("c4");
@@ -63,15 +69,17 @@ public class Invoker {
 			// TODO Tipo inválido nos argumentos do parametro
 			e.printStackTrace();
 		}
+		System.out.println("Erro 1");
 		
 		return null;
 	}
 
-	private void invokeMethod(Object[] args, Method method, Object s) throws RemoteError{
+	private Object invokeMethod(Object[] args, Method method, Object s) throws RemoteError{
 		try {
 			Object x = method.invoke(s, args);
 			System.out.println("fim");
 			System.out.println(x);
+			return x;
 		}catch (IllegalArgumentException e) { 
 			System.out.println("c1");
 		}catch (IllegalAccessException e) { 
@@ -79,5 +87,7 @@ public class Invoker {
 		}catch (InvocationTargetException e) { 
 			System.out.println("c3");
 		}
+		System.out.println("Erro");
+		return null;
 	}
 }

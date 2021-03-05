@@ -5,9 +5,9 @@ public class User {
 	private String nome;
 	private String senha;
 	private Double saldo;
-	private Long   numAcc;
+	private Integer   numAcc;
 	
-	public User(String nome, String senha, Double saldo, Long numAcc) {
+	public User(String nome, String senha, Double saldo, Integer numAcc) {
 		super();
 		this.nome = nome;
 		this.senha = senha;
@@ -32,10 +32,10 @@ public class User {
 	public void setSaldo(Double saldo) {
 		this.saldo = saldo;
 	}
-	public Long getNumAcc() {
+	public Integer getNumAcc() {
 		return numAcc;
 	}
-	public void setNumAcc(Long numAcc) {
+	public void setNumAcc(Integer numAcc) {
 		this.numAcc = numAcc;
 	}
 

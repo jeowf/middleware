@@ -13,26 +13,28 @@ import basic.RemoteError;
 public class ClientRequestHandler {
 	private ClientConfig clientConfig;
 	
-	private static final int BUFFER_SIZE = 1024;
+	
 	
 	public ClientRequestHandler() {
-				
+		clientConfig = ClientConfig.getInstance();
 	}
 	
 	public String send(String message) throws RemoteError {
 		try {
 			
-			InetAddress hostIP= InetAddress.getLocalHost();
-			InetSocketAddress myAddress = new InetSocketAddress(hostIP, 10000);
+			//InetAddress hostIP= InetAddress.getLocalHost();
+			InetSocketAddress myAddress = new InetSocketAddress(
+					clientConfig.getHostIP(), 
+					clientConfig.getServerPort());
 			SocketChannel myClient = SocketChannel.open(myAddress);			
 	
-			ByteBuffer myBuffer = ByteBuffer.allocate(BUFFER_SIZE);
+			ByteBuffer myBuffer = ByteBuffer.allocate(ClientConfig.BUFFER_SIZE);
 			myBuffer.put(message.getBytes());
 			myBuffer.flip();
 			//int bytesWritten= myClient2.write(myBuffer2);
 			myClient.write(myBuffer);
 				
-			ByteBuffer myBuffer2 = ByteBuffer.allocate(BUFFER_SIZE);
+			ByteBuffer myBuffer2 = ByteBuffer.allocate(ClientConfig.BUFFER_SIZE);
 			//myBuffer.flip();
 			
 			try {

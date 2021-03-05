@@ -1,15 +1,15 @@
 package patterns;
 
-public class Singleton<T> {
+public class Singleton {
 
-	private static volatile Singleton<?> instance;
+	private static volatile Singleton instance;
 	private static Object mutex = new Object();
 
 	private Singleton() {
 	}
 
-	public static Singleton<?> getInstance() {
-		Singleton<?> result = instance;
+	public static Singleton getInstance() {
+		Singleton result = instance;
 		if (result == null) {
 			synchronized (mutex) {
 				result = instance;
