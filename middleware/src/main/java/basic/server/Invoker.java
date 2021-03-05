@@ -1,5 +1,6 @@
 package basic.server;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -43,15 +44,25 @@ public class Invoker {
 			
 			Class<?> objectClass = Class.forName(rm.getInvocationData().getObjectClass());
 			
-			Method method;
+			
 			//String s = "pão";
 			try {
-				System.out.println(objectClass.getName());
-				method = objectClass.getMethod(rm.getInvocationData().getSomeMethod(),	argsT);
-				System.out.println();
-				Object obj = il.getInstance(objectClass, rm.getInvocationData().getObjectID());
+				//System.out.println(objectClass.getName());
+				String methodName = rm.getInvocationData().getSomeMethod();
+				if (methodName.equals("*constructor")) {
+					Constructor constructor = objectClass.getConstructor(argsT);
+					
+					
+					return createObject(args,constructor,objectClass);
+					
+				} else {
+					Method method;
+					method = objectClass.getMethod(methodName,	argsT);
+					Object obj = il.getInstance(objectClass, rm.getInvocationData().getObjectID());
+					
+					return invokeMethod(args, method, obj);
+				}
 				
-				return invokeMethod(args, method, obj);
 				
 			} catch (SecurityException e) {
 				System.out.println("c4");
@@ -88,6 +99,28 @@ public class Invoker {
 			System.out.println("c3");
 		}
 		System.out.println("Erro");
+		return null;
+	}
+	
+	private Long createObject(Object[] args, Constructor constructor, Class cls) throws RemoteError {
+		
+		try {
+			Object obj = constructor.newInstance(args);
+			return il.addInstance(cls, obj);
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return null;
 	}
 }

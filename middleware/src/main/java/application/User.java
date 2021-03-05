@@ -7,6 +7,10 @@ public class User {
 	private Double saldo;
 	private Integer   numAcc;
 	
+	public User() {
+		super();
+	}
+	
 	public User(String nome, String senha, Double saldo, Integer numAcc) {
 		super();
 		this.nome = nome;

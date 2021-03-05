@@ -17,11 +17,7 @@ public class InstanceList {
 	private InstanceList() {
 		instances = new ConcurrentHashMap<Class<?>, HashMap<Long, Object>>();
 		
-		instances.put(String.class, new HashMap<Long,Object>());
-		instances.get(String.class).put((long) 0, "pão");
 		
-		instances.put(User.class, new HashMap<Long,Object>());
-		instances.get(User.class).put((long) 0, new User("Neto", "CêS NUM CORRE", 50.4, 1234567));
 	}
 
 	public Object getInstance(Class<?> cls, long id) throws RemoteError{
@@ -31,15 +27,19 @@ public class InstanceList {
 		return instances.get(cls).get(id);
 	}
 	
-	public void addInstance(Class<?> cls, Long id, Object obj) throws RemoteError{
+	public Long addInstance(Class<?> cls, Object obj) throws RemoteError{
 		if (!instances.containsKey(cls)) {
 			instances.put(cls,new HashMap<Long,Object>());
 		}
-		
+		/*
 		if (instances.get(cls).containsKey(id))
 			throw new RemoteError(); // id em uso
-		
+		*/
+		Long id = (long) instances.get(cls).size();
+		System.out.println("ID : " + id);
 		instances.get(cls).put(id, obj);
+		
+		return id;
 	}
 	
 	public static InstanceList getInstance() {

@@ -12,9 +12,19 @@ public class UserProxy extends ClientProxy{
 	private ClientRequestHandler clientRequestHandler;
 	
 	public UserProxy() {
-		this.realID = 0;
 		this.clientRequestHandler = new ClientRequestHandler();
 		this.requestor = new Requestor(clientRequestHandler, User.class);
+		
+		try {
+			//System.out.println(requestor.invoke(-1, "*constructor" , null, null));
+			
+			Long id = (long) Math.floor((Double) requestor.invoke(-1, "*constructor" , null, null));
+			System.out.println("ID DO MENINO " + id);
+			this.realID = id;
+		} catch (RemoteError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public String getNome() {
