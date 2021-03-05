@@ -11,6 +11,7 @@ public class InstanceList {
 	private HashMap<Class, List<Object>> instances;
 	
 	public Object getInstance(Class cls, long id) throws RemoteError{
+		
 		return null;
 	}
 	
