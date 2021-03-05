@@ -97,10 +97,20 @@ public class ServerRequestHandler {
 			try {
 			logger(String.format("Message Received.....: %s\n", data));
 			
+			
+			// int id = invokerRegistry.decode(data);
+			
+			// Invoker invoker = invokerRegistry.getInvoker(id);
+			
+			// Object obj = invoker.invoke(data')
+			
+			// enviar obj de volta para o client handler
+			
 			ServerResponseMessage srm = new ServerResponseMessage();
 			srm.setObject("Recebido");
 			
 			Marshaller marshaller = new Marshaller();
+			
 			
 			
 			String message = marshaller.marshal(srm);	
