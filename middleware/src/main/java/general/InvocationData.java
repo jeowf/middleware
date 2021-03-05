@@ -13,8 +13,7 @@ public class InvocationData implements Serializable{
 		this.objectID = objectID;
 		this.someMethod = someMethod;
 		this.args = args;
-		this.objectClass = objectClass;
-		
+		this.objectClass = objectClass;		
 	}
 
 	public long getObjectID() {

@@ -22,7 +22,6 @@ public class Requestor {
 	
 	public Object invoke(long id, String methodName, Object ... args) throws RemoteError {
 		
-		System.out.println(methodName);
 		InvocationData invocationData = new InvocationData(id, methodName, args, objectClass.getName());
 		
 		RequestorMessage m = new RequestorMessage(requestorID, invocationData);
