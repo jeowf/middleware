@@ -5,50 +5,52 @@ import basic.RemoteError;
 import general.InvocationData;
 import general.Message;
 import general.RequestorMessage;
+import general.ServerResponseMessage;
 
 public class Requestor {
-	private static long requestorID;
-	private static Marshaller marshaller;
-	private static ClientRequestHandler clientRequestHandler;
+	private long requestorID;
+	private Marshaller marshaller;
+	private ClientRequestHandler clientRequestHandler;
+	private Class objectClass;
 	
-	public Requestor() {
-		
+	public Requestor(ClientRequestHandler clientRequestHandler, Class objectClass) {
+		marshaller = new Marshaller();
+		this.requestorID = 0; // Substituir por um ID válido posteriormente
+		this.clientRequestHandler = clientRequestHandler;
+		this.objectClass = objectClass;
 	}
 	
-	public static Object invoke(Object target, String methodName, Object ... args) throws RemoteError {
+	public Object invoke(long id, String methodName, Object ... args) throws RemoteError {
 		
-		InvocationData invocationData = new InvocationData(target, methodName);
+		System.out.println(methodName);
+		InvocationData invocationData = new InvocationData(id, methodName, args, objectClass);
 		
 		RequestorMessage m = new RequestorMessage(requestorID, invocationData);
 		
-		marshaller = new Marshaller();
+		String message = marshaller.marshal(m);
 		
-		clientRequestHandler = new ClientRequestHandler();
+		System.out.println(message);
 		
-		String dataToSend = marshaller.marshal(m);
+		//decodeMessage (adicionar o ID do invoker na string de mensagem)
 		
-		print(clientRequestHandler.send(dataToSend));
-		print("Fim");
-
+		String response = clientRequestHandler.send(message);
 		
-		return null;
-	}
-	
-	public static void main(String[] args) {
+		ServerResponseMessage objResponse = (ServerResponseMessage) marshaller.unmarshal(response);
 		
-		Object x = "teste";
-		
+		return objResponse.getObject();
+				
+		/*
 		try {
-			invoke(x, "someMethod", null);
-		} catch (RemoteError e) {
+			Object x = Class.forName(objectClass.getName()).cast(objResponse);
+		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
+		*/
 		
+		//print(clientRequestHandler.send(dataToSend));
+		//print("Fim");
 	}
 	
-	public static void print(String msg) {
-		System.out.println(msg);
-	}
+
 }

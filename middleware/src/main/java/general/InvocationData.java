@@ -1,23 +1,28 @@
 package general;
 
-public class InvocationData {
+import java.io.Serializable;
+
+public class InvocationData implements Serializable{
 	
-	private Object object;
-	
+	private long objectID;
 	private String someMethod;
+	private Object[] args;
+	private Class objectClass;
 
-	public InvocationData(Object object, String someMethod) {
-		super();
-		this.object = object;
+	public InvocationData(long objectID, String someMethod, Object[] args, Class objectClass) {
+		this.objectID = objectID;
 		this.someMethod = someMethod;
+		this.args = args;
+		this.objectClass = objectClass;
+		
 	}
 
-	public Object getObject() {
-		return object;
+	public long getObjectID() {
+		return objectID;
 	}
 
-	public void setObject(Object object) {
-		this.object = object;
+	public void setObjectID(long objectID) {
+		this.objectID = objectID;
 	}
 
 	public String getSomeMethod() {
@@ -27,5 +32,23 @@ public class InvocationData {
 	public void setSomeMethod(String someMethod) {
 		this.someMethod = someMethod;
 	}
+
+	public Object[] getArgs() {
+		return args;
+	}
+
+	public void setArgs(Object[] args) {
+		this.args = args;
+	}
+
+	public Class getObjectClass() {
+		return objectClass;
+	}
+
+	public void setObjectClass(Class objectClass) {
+		this.objectClass = objectClass;
+	}
+
+	
 
 }

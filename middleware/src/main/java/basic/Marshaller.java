@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
 import general.Message;
+import general.RequestorMessage;
 
 public class Marshaller {
 	
@@ -16,7 +17,7 @@ public class Marshaller {
 	}
 	
 	public String marshal(Message message) {
-		return gson.toJson(message);
+		return gson.toJson(message,Message.class);
 	}
 	
 	public Message unmarshal(String json) {

@@ -12,18 +12,18 @@ import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
 
+import basic.Marshaller;
 import basic.RemoteError;
+import general.ServerResponseMessage;
 
 public class ServerRequestHandler {
 	private InvokerRegistry invokerRegistry;
 	private ServerConfig serverConfig;
 	
-	
-	
 	private static final int BUFFER_SIZE = 1024;
-	private static Selector selector = null;
+	private Selector selector = null;
 	
-	public static String receive(String message) throws RemoteError{
+	public void receive() throws RemoteError{
 		
 		try 
 		{
@@ -66,7 +66,7 @@ public class ServerRequestHandler {
 			e.printStackTrace();
 		}
 		
-		return "";
+		//return "";
 	}
 	
 	private long decode(String message) throws RemoteError{
@@ -74,7 +74,7 @@ public class ServerRequestHandler {
 		//usar string.replace
 	}
 	
-	private static void processAcceptEvent(ServerSocketChannel mySocket,
+	private void processAcceptEvent(ServerSocketChannel mySocket,
 			SelectionKey key) throws IOException 
 	{
 		// Accept the connection and make it non-blocking
@@ -84,7 +84,7 @@ public class ServerRequestHandler {
 		myClient.register(selector, SelectionKey.OP_READ);
 	}
 			
-	private static void processReadEvent(SelectionKey key) throws IOException 
+	private void processReadEvent(SelectionKey key) throws IOException 
 	{
 		// create a ServerSocketChannel to read the request
 		SocketChannel myClient = (SocketChannel) key.channel();
@@ -97,7 +97,13 @@ public class ServerRequestHandler {
 			try {
 			logger(String.format("Message Received.....: %s\n", data));
 			
-			String message = "Recebido";		
+			ServerResponseMessage srm = new ServerResponseMessage();
+			srm.setObject("Recebido");
+			
+			Marshaller marshaller = new Marshaller();
+			
+			
+			String message = marshaller.marshal(srm);	
 			
 			ByteBuffer myBuffer2 = ByteBuffer.allocate(BUFFER_SIZE);
 			myBuffer2.put(message.getBytes());
@@ -114,19 +120,8 @@ public class ServerRequestHandler {
 	
 	}
 	
-	public static void logger(String msg) {
+	public void logger(String msg) {
 			System.out.println(msg);
 		}
 	
-	
-	public static void main(String[] args) {
-		String x = "";
-		
-		try {
-			receive(x);
-		} catch (RemoteError e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }

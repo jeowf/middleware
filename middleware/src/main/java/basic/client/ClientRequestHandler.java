@@ -16,8 +16,7 @@ public class ClientRequestHandler {
 	private static final int BUFFER_SIZE = 1024;
 	
 	public ClientRequestHandler() {
-		
-		
+				
 	}
 	
 	public String send(String message) throws RemoteError {
@@ -25,26 +24,27 @@ public class ClientRequestHandler {
 			
 			InetAddress hostIP= InetAddress.getLocalHost();
 			InetSocketAddress myAddress = new InetSocketAddress(hostIP, 10000);
-			SocketChannel myClient2 = SocketChannel.open(myAddress);			
+			SocketChannel myClient = SocketChannel.open(myAddress);			
 	
-			ByteBuffer myBuffer2 = ByteBuffer.allocate(BUFFER_SIZE);
-			myBuffer2.put(message.getBytes());
-			myBuffer2.flip();
-			int bytesWritten= myClient2.write(myBuffer2);
-				
 			ByteBuffer myBuffer = ByteBuffer.allocate(BUFFER_SIZE);
+			myBuffer.put(message.getBytes());
+			myBuffer.flip();
+			//int bytesWritten= myClient2.write(myBuffer2);
+			myClient.write(myBuffer);
+				
+			ByteBuffer myBuffer2 = ByteBuffer.allocate(BUFFER_SIZE);
 			//myBuffer.flip();
 			
 			try {
-				myClient2.read(myBuffer);
+				myClient.read(myBuffer2);
 				//myBuffer.flip();
-				return new String(myBuffer.array()).trim();
+				return new String(myBuffer2.array()).trim();
 								
 			}catch (Exception e) {	
 				e.printStackTrace();
 			}
 			
-			myClient2.close();
+			myClient.close();
 						
 		} 
 		catch (IOException e) 
@@ -52,6 +52,6 @@ public class ClientRequestHandler {
 			e.printStackTrace();
 		}	
 		
-		return "";
+		return null;
 	}
 }
