@@ -25,7 +25,7 @@ public class Invoker {
 		try {
 			//Class<?> cls = Class.forName(o);
 			//System.out.println(cls.getName());
-			String[] argsTypes = rm.getInvocationData().getArgsType();
+			String[] argsTypes = rm.getInvocationData().getArgsTypes();
 			Object[] args = rm.getInvocationData().getArgs();
 			
 			Class<?>[] argsT = new Class<?>[argsTypes.length]; 
@@ -37,8 +37,8 @@ public class Invoker {
 			Method method;
 			String s = "pão";
 			try {
-				//method = s.getClass().getMethod(rm.getInvocationData().getSomeMethod(),	argsT);
-				method = s.getClass().getMethod("equals", Object.class);
+				method = s.getClass().getMethod(rm.getInvocationData().getSomeMethod(),	argsT);
+				//method = s.getClass().getMethod("equals", Object.class);
 				try {
 					Object x = method.invoke(s, args);
 					System.out.println("fim");

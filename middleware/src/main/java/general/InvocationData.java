@@ -7,20 +7,16 @@ public class InvocationData implements Serializable{
 	private long objectID;
 	private String someMethod;
 	private Object[] args;
-	private String[] argsType;
+	private String[] argsTypes;
 	private String objectClass;
 
-	public InvocationData(long objectID, String someMethod, Object[] args, String objectClass) {
+	public InvocationData(long objectID, String someMethod, Object[] args, String[] argsTypes, String objectClass) {
 		this.objectID = objectID;
 		this.someMethod = someMethod;
 		this.args = args;
 		this.objectClass = objectClass;	
 		
-		argsType = new String[args.length];
-		for (int i = 0; i < args.length; i++) {
-			argsType[i] = args[i].getClass().getName();
-			System.out.println(argsType[i]);
-		}
+		this.argsTypes =argsTypes;
 	}
 
 	public long getObjectID() {
@@ -55,12 +51,12 @@ public class InvocationData implements Serializable{
 		this.objectClass = objectClass;
 	}
 
-	public String[] getArgsType() {
-		return argsType;
+	public String[] getArgsTypes() {
+		return argsTypes;
 	}
 
-	public void setArgsType(String[] argsType) {
-		this.argsType = argsType;
+	public void setArgsTypes(String[] argsType) {
+		this.argsTypes = argsType;
 	}
 
 	

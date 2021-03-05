@@ -20,9 +20,9 @@ public class Requestor {
 		this.objectClass = objectClass;
 	}
 	
-	public Object invoke(long id, String methodName, Object ... args) throws RemoteError {
+	public Object invoke(long id, String methodName, Object[] args, String[] argsTypes) throws RemoteError {
 		
-		InvocationData invocationData = new InvocationData(id, methodName, args, objectClass.getName());
+		InvocationData invocationData = new InvocationData(id, methodName, args, argsTypes, objectClass.getName());
 		
 		RequestorMessage m = new RequestorMessage(requestorID, invocationData);
 		

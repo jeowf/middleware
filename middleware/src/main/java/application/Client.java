@@ -13,11 +13,13 @@ public class Client {
 		Requestor r = new Requestor(crh, String.class);
 		
 		try {
-			System.out.println((String) r.invoke(0, "equals", "pão"));
+			System.out.println((String) r.invoke(0, "equals",
+					new Object[]{"pão"}, 
+					new String[] {Object.class.getName()}));
 		} catch (RemoteError e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 }
