@@ -8,11 +8,25 @@ import basic.RemoteError;
 //Singleton
 public class InvokerRegistry {
 	
+	private static volatile InvokerRegistry instance;
+	private static Object mutex = new Object();
+	
 	private List<Invoker> invokers;	
 	
-	public InvokerRegistry() {
-		super();
+	private InvokerRegistry() {
 		this.invokers = new ArrayList<Invoker>();
+	}
+
+	public static InvokerRegistry getInstance() {
+		InvokerRegistry result = instance;
+		if (result == null) {
+			synchronized (mutex) {
+				result = instance;
+				if (result == null)
+					instance = result = new InvokerRegistry();
+			}
+		}
+		return result;
 	}
 
 	public Invoker getInvoker(long id) throws RemoteError{
