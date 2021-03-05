@@ -126,11 +126,13 @@ public class ServerRequestHandler {
 			
 			data = removeIdOfInvoker(data);
 			
-			Invoker invoker = invokerRegistry.getInvoker(id);
+			invokerRegistry = new InvokerRegistry();
+			
+			Invoker invoker = invokerRegistry.getInvoker(-1);
 			
 			logger(String.format("Message Change.....: %s\n", data));
 			
-			//Object obj = invoker.invoke(dataDecode);
+			Object obj = invoker.invoke(dataDecode);
 			
 			// enviar obj de volta para o client handler
 			

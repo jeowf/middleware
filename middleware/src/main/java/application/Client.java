@@ -15,6 +15,7 @@ public class Client {
 		try {
 			System.out.println((String) r.invoke(0, "equals",
 					new Object[]{"pão"}, 
+
 					new String[] {Object.class.getName()}));
 		} catch (RemoteError e) {
 			// TODO Auto-generated catch block
