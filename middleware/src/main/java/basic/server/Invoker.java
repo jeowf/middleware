@@ -10,12 +10,14 @@ import general.RequestorMessage;
 public class Invoker {
 	private long invokerID;
 	private Marshaller marshaller;
+	private InstanceList il;
 	
 	
 	public Invoker(long invokerID) {
 		super();
 		this.invokerID = invokerID;
 		this.marshaller = new Marshaller();
+		this.il = new InstanceList();
 	}
 
 	public Object invoke(String message) throws RemoteError {
@@ -34,22 +36,17 @@ public class Invoker {
 				argsT[i] = Class.forName(argsTypes[i]);
 			}
 			
+			Class<?> objectClass = Class.forName(rm.getInvocationData().getObjectClass());
+			
 			Method method;
-			String s = "pão";
+			//String s = "pão";
 			try {
-				method = s.getClass().getMethod(rm.getInvocationData().getSomeMethod(),	argsT);
-				//method = s.getClass().getMethod("equals", Object.class);
-				try {
-					Object x = method.invoke(s, args);
-					System.out.println("fim");
-					System.out.println(x);
-				}catch (IllegalArgumentException e) { 
-					System.out.println("c1");
-				}catch (IllegalAccessException e) { 
-					System.out.println("c2");
-				}catch (InvocationTargetException e) { 
-					System.out.println("c3");
-				}
+				method = objectClass.getClass().getMethod(rm.getInvocationData().getSomeMethod(),	argsT);
+				
+				Object obj = il.getInstance(objectClass.getClass(), rm.getInvocationData().getObjectID());
+				
+				invokeMethod(args, method, obj);
+				
 			} catch (SecurityException e) {
 				System.out.println("c4");
 
@@ -67,17 +64,20 @@ public class Invoker {
 			e.printStackTrace();
 		}
 		
-		
-		
 		return null;
 	}
-	
-	private Object invokeMethod(Object obj) throws RemoteError {
-		return null;
-	}
-	
-	public long getRemove(Object obj) throws RemoteError {
-		
-		return 0;
+
+	private void invokeMethod(Object[] args, Method method, Object s) throws RemoteError{
+		try {
+			Object x = method.invoke(s, args);
+			System.out.println("fim");
+			System.out.println(x);
+		}catch (IllegalArgumentException e) { 
+			System.out.println("c1");
+		}catch (IllegalAccessException e) { 
+			System.out.println("c2");
+		}catch (InvocationTargetException e) { 
+			System.out.println("c3");
+		}
 	}
 }

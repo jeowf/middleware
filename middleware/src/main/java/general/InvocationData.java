@@ -58,7 +58,5 @@ public class InvocationData implements Serializable{
 	public void setArgsTypes(String[] argsType) {
 		this.argsTypes = argsType;
 	}
-
 	
-
 }

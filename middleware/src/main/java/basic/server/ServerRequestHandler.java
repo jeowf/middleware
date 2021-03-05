@@ -24,6 +24,11 @@ public class ServerRequestHandler {
 	private Selector selector = null;
 	private String dataDecode = null;
 	
+	public ServerRequestHandler() {
+		invokerRegistry = new InvokerRegistry();
+		serverConfig = new ServerConfig();
+	}
+	
 	public void receive() throws RemoteError{
 		
 		try 
@@ -125,9 +130,7 @@ public class ServerRequestHandler {
 			long id = decode(data);
 			
 			data = removeIdOfInvoker(data);
-			
-			invokerRegistry = new InvokerRegistry();
-			
+						
 			Invoker invoker = invokerRegistry.getInvoker(-1);
 			
 			logger(String.format("Message Change.....: %s\n", data));
