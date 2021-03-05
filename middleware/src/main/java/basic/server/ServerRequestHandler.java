@@ -25,7 +25,7 @@ public class ServerRequestHandler {
 	private String dataDecode = null;
 	
 	public ServerRequestHandler() {
-		invokerRegistry = new InvokerRegistry();
+		invokerRegistry = InvokerRegistry.getInstance();
 		serverConfig = new ServerConfig();
 	}
 	

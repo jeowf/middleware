@@ -17,7 +17,7 @@ public class Invoker {
 		super();
 		this.invokerID = invokerID;
 		this.marshaller = new Marshaller();
-		this.il = new InstanceList();
+		this.il = InstanceList.getInstance();
 	}
 
 	public Object invoke(String message) throws RemoteError {
@@ -42,8 +42,8 @@ public class Invoker {
 			//String s = "pão";
 			try {
 				method = objectClass.getClass().getMethod(rm.getInvocationData().getSomeMethod(),	argsT);
-				
-				Object obj = il.getInstance(objectClass.getClass(), rm.getInvocationData().getObjectID());
+				System.out.println();
+				Object obj = il.getInstance(objectClass, rm.getInvocationData().getObjectID());
 				
 				invokeMethod(args, method, obj);
 				
