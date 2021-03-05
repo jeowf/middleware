@@ -7,9 +7,9 @@ public class InvocationData implements Serializable{
 	private long objectID;
 	private String someMethod;
 	private Object[] args;
-	private Class objectClass;
+	private String objectClass;
 
-	public InvocationData(long objectID, String someMethod, Object[] args, Class objectClass) {
+	public InvocationData(long objectID, String someMethod, Object[] args, String objectClass) {
 		this.objectID = objectID;
 		this.someMethod = someMethod;
 		this.args = args;
@@ -41,11 +41,11 @@ public class InvocationData implements Serializable{
 		this.args = args;
 	}
 
-	public Class getObjectClass() {
+	public String getObjectClass() {
 		return objectClass;
 	}
 
-	public void setObjectClass(Class objectClass) {
+	public void setObjectClass(String objectClass) {
 		this.objectClass = objectClass;
 	}
 

@@ -17,13 +17,14 @@ public class Marshaller {
 	}
 	
 	public String marshal(Message message) {
-		return gson.toJson(message,Message.class);
+		return gson.toJson(message);
 	}
 	
-	public Message unmarshal(String json) {
+	public Message unmarshal(String json, Class cls) {
 		JsonReader reader = new JsonReader(new StringReader(json));
         reader.setLenient(true);
-        Message message = gson.fromJson(reader, Message.class);
+        //Message message = gson.fromJson(reader, Message.class);
+        Message message = gson.fromJson(reader, cls);
 		return message;
 	}
 	
