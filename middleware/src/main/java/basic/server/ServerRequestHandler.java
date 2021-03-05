@@ -72,7 +72,7 @@ public class ServerRequestHandler {
 	
 	private long decode(String message) throws RemoteError{
 				
-		String idInvoker = message.substring(0, message.indexOf("{") - 1);
+		String idInvoker = message.substring(0, message.indexOf("{"));
 		
 		long id;
 		
@@ -82,14 +82,16 @@ public class ServerRequestHandler {
 			id = -1;
 		}
 		
+		logger("" + id);
+		
 		return id;
 	}
 	
-private String removeIdOfInvoker(String message) throws RemoteError{
+	private String removeIdOfInvoker(String message) throws RemoteError{
 		
 		StringBuffer text = new StringBuffer(message);
 						
-		text.replace( 0 , text.indexOf("{", 0) - 1, "");
+		text.replace( 0 , text.indexOf("{", 0), "");
 		
 		dataDecode = text.toString();
 		
@@ -124,7 +126,7 @@ private String removeIdOfInvoker(String message) throws RemoteError{
 			
 			data = removeIdOfInvoker(data);
 			
-			//Invoker invoker = invokerRegistry.getInvoker(id);
+			Invoker invoker = invokerRegistry.getInvoker(id);
 			
 			logger(String.format("Message Change.....: %s\n", data));
 			
