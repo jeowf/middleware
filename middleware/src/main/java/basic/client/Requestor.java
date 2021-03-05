@@ -29,9 +29,13 @@ public class Requestor {
 		
 		String message = marshaller.marshal(m);
 		
-		System.out.println(message);
+		//System.out.println(message);
 		
-		//decodeMessage (adicionar o ID do invoker na string de mensagem)
+		//encodeMessage (adicionar o ID do invoker na string de mensagem)
+		
+		message = encode(message, 100);
+		
+		//System.out.println(message);
 		
 		String response = clientRequestHandler.send(message);
 		
@@ -50,6 +54,12 @@ public class Requestor {
 		
 		//print(clientRequestHandler.send(dataToSend));
 		//print("Fim");
+	}
+	
+	public String encode(String message, long invokerId) {
+		StringBuffer text = new StringBuffer(message);
+		text.replace( 0 , 0 , "" + invokerId);
+		return text.toString();
 	}
 	
 
