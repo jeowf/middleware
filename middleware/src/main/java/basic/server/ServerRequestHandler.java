@@ -15,10 +15,12 @@ import java.util.Set;
 import basic.Marshaller;
 import basic.RemoteError;
 import general.ServerResponseMessage;
+import identification.lookup.LookUp;
 
 public class ServerRequestHandler {
 	private InvokerRegistry invokerRegistry;
 	private ServerConfig serverConfig;
+	private LookUp lookup;
 	
 	private static final int BUFFER_SIZE = 1024;
 	private Selector selector = null;
@@ -27,6 +29,7 @@ public class ServerRequestHandler {
 	public ServerRequestHandler() {
 		invokerRegistry = InvokerRegistry.getInstance();
 		serverConfig = new ServerConfig();
+		lookup = new LookUp();
 	}
 	
 	public void receive() throws RemoteError{
@@ -75,21 +78,30 @@ public class ServerRequestHandler {
 		//return "";
 	}
 	
-	private long decode(String message) throws RemoteError{
+	private long[] decode(String message) throws RemoteError{
 				
 		String idInvoker = message.substring(0, message.indexOf("{"));
 		
 		long id;
+		long code;
 		
 		if(idInvoker.length() > 0) {
-			id = Long.parseLong(idInvoker);
+			String[] codes = idInvoker.split(",");
+			id = Long.parseLong(codes[0]);
+			code = Long.parseLong(codes[1]);
 		}else {
 			id = -1;
+			code = -1;
 		}
 		
 		logger("" + id);
+		//logger("" + code);
 		
-		return id;
+		long[] bufferRetorno = new long[2];
+		bufferRetorno[0] = id;
+		bufferRetorno[1] = code;
+		
+		return bufferRetorno;
 	}
 	
 	private String removeIdOfInvoker(String message) throws RemoteError{
@@ -127,30 +139,52 @@ public class ServerRequestHandler {
 			try {
 			logger(String.format("Message Received.....: %s\n", data));
 			
-			long id = decode(data);
+			long[] codes = decode(data);
 			
 			data = removeIdOfInvoker(data);
-						
-			Invoker invoker = invokerRegistry.getInvoker(-1);
 			
-			logger(String.format("Message Change.....: %s\n", data));
-			
-			Object obj = invoker.invoke(dataDecode);
-			
-			// enviar obj de volta para o client handler
-			
-			ServerResponseMessage srm = new ServerResponseMessage();
-			
-			srm.setObject(obj);
-			
-			Marshaller marshaller = new Marshaller();
-			
-			String message = marshaller.marshal(srm);	
-			
-			ByteBuffer myBuffer2 = ByteBuffer.allocate(BUFFER_SIZE);
-			myBuffer2.put(message.getBytes());
-			myBuffer2.flip();
-			int bytesWritten = myClient.write(myBuffer2);			
+			if(codes[0] == 28) 
+			{
+				Long idObj = lookup.lookup(data);
+				
+				logger(String.format("Message Lookup.....: %s\n", data));
+				
+				ServerResponseMessage srm = new ServerResponseMessage();
+				
+				srm.setObject(idObj);
+				
+				Marshaller marshaller = new Marshaller();
+				
+				String message = marshaller.marshal(srm);	
+				
+				ByteBuffer myBuffer2 = ByteBuffer.allocate(BUFFER_SIZE);
+				myBuffer2.put(message.getBytes());
+				myBuffer2.flip();
+				int bytesWritten = myClient.write(myBuffer2);
+			}
+			else 
+			{
+				Invoker invoker = invokerRegistry.getInvoker(-1);
+				
+				logger(String.format("Message Change.....: %s\n", data));
+				
+				Object obj = invoker.invoke(dataDecode);
+				
+				// enviar obj de volta para o client handler
+				
+				ServerResponseMessage srm = new ServerResponseMessage();
+				
+				srm.setObject(obj);
+				
+				Marshaller marshaller = new Marshaller();
+				
+				String message = marshaller.marshal(srm);	
+				
+				ByteBuffer myBuffer2 = ByteBuffer.allocate(BUFFER_SIZE);
+				myBuffer2.put(message.getBytes());
+				myBuffer2.flip();
+				int bytesWritten = myClient.write(myBuffer2);
+			}			
 					
 			}catch (Exception e) {
 					e.printStackTrace();
