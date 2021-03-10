@@ -41,6 +41,8 @@ public class Client {
 		
 		System.out.println("Nome: " + up.getNome());
 		
+		consutarId("Kevin Corno", up);
+		
 		up.setNome("RC");
 		
 		System.out.println("Nome: " + up.getNome());

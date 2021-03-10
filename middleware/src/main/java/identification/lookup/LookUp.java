@@ -44,6 +44,9 @@ public class LookUp
 			
 			//invoker.invoke(marshaller.marshal(rm));
 			
+			System.out.println("Printando o código dentro da consulta com sucesso");
+			printHash();
+			
 			return ids.get(lm.getObjectType());
 		}
 		else
