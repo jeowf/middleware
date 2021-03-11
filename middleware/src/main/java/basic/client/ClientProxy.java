@@ -1,11 +1,15 @@
 package basic.client;
 
 public class ClientProxy {
-	private long realID;
-	private Requestor requestor;
+	protected long realID;
+	protected Requestor requestor;
+	protected ClientRequestHandler clientRequestHandler;
+
+	protected Class objectClass;
 	
-	public ClientProxy() {
-		
+	public ClientProxy(Class objectClass) {
+		this.clientRequestHandler = new ClientRequestHandler();
+		this.requestor = new Requestor(clientRequestHandler, objectClass);
 	}
 	
 	// Generated Methods
