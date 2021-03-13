@@ -22,7 +22,7 @@ public class Test {
 		}
 		*/
 		
-		String s = "p„o";
+		String s = "p√£o";
 		Method method;
 		
 		try {
