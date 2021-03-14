@@ -1,5 +1,8 @@
 package patterns.strategy;
 
+import java.util.Calendar;
+
+import general.InvocationData;
 import general.LogDTO;
 
 public class LogClientInterceptor implements ClientInterceptorStrategy{
@@ -39,6 +42,19 @@ public class LogClientInterceptor implements ClientInterceptorStrategy{
 		this.log = new LogDTO();
 		this.log.setRegistryClient( registryClient );
 		this.log.setOperationTipe( operationType );
+	}
+
+	public void prepareInterceptor( InvocationData invocationData ) {
+		LogDTO log = new LogDTO();
+		
+		Calendar dateTime = Calendar.getInstance();
+		log.setDateTime( dateTime );
+		
+		log.setOperationTipe( invocationData.getSomeMethod() );
+		
+		String idClient = String.valueOf( invocationData.getObjectID() );
+		log.setRegistryClient( idClient );
+		
 	}
 	
 	
