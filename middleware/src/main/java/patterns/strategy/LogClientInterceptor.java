@@ -15,7 +15,7 @@ public class LogClientInterceptor implements ClientInterceptorStrategy{
 	
 	public LogClientInterceptor() {
 		this.ativo = false;
-		//buildInterceptor();
+		this.log = new LogDTO();
 		
 	}
 	
@@ -37,23 +37,20 @@ public class LogClientInterceptor implements ClientInterceptorStrategy{
 		return ativo;
 	}
 
-	public void buildInterceptor( String registryClient, String operationType ) {
+	public void buildInterceptor() {
 		this.ativo = true;
-		this.log = new LogDTO();
-		this.log.setRegistryClient( registryClient );
-		this.log.setOperationTipe( operationType );
+		
+		Calendar dateTime = Calendar.getInstance();
+		this.log.setDateTime( dateTime );
 	}
 
 	public void prepareInterceptor( InvocationData invocationData ) {
-		LogDTO log = new LogDTO();
+		this.ativo = true;
 		
-		Calendar dateTime = Calendar.getInstance();
-		log.setDateTime( dateTime );
-		
-		log.setOperationTipe( invocationData.getSomeMethod() );
+		this.log.setOperationTipe( invocationData.getSomeMethod() );
 		
 		String idClient = String.valueOf( invocationData.getObjectID() );
-		log.setRegistryClient( idClient );
+		this.log.setRegistryClient( idClient );
 		
 	}
 	
