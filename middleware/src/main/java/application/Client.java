@@ -2,11 +2,33 @@ package application;
 
 import basic.RemoteError;
 import basic.client.ClientRequestHandler;
+import basic.client.InterceptorRegistry;
 import basic.client.Requestor;
+import general.enums.InterceptorType;
+import patterns.strategy.ClientInterceptorStrategy;
+import patterns.strategy.LogClientInterceptor;
 
 public class Client {
+	
+	ClientInterceptorStrategy clientInterceptorStrategy;
+	
+	private static ClientInterceptorStrategy buildInterceptor( InterceptorType interceptorType ) {
+		if( interceptorType.equals( InterceptorType.INTERCEPTOR_LOG ) ) {
+			return new LogClientInterceptor();
+			
+		}
+		
+		return null;
+		
+	}
 
 	public static void main(String[] args) {
+		
+		// Construindo o interceptor para log
+		ClientInterceptorStrategy clientInterceptorLog = buildInterceptor( InterceptorType.INTERCEPTOR_LOG );
+		
+		InterceptorRegistry interceptorRegistry = new InterceptorRegistry();
+		interceptorRegistry.addInterceptor( clientInterceptorLog );
 		
 		ClientRequestHandler crh = new ClientRequestHandler();
 		
@@ -35,6 +57,10 @@ public class Client {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+		
+		
 
 	}
+	
+	
 }
