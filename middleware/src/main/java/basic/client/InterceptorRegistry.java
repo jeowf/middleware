@@ -21,6 +21,11 @@ public class InterceptorRegistry {
 	}
 
 	public static void addInterceptor( ClientInterceptorStrategy clientInterceptor ) {
+		if( interceptors == null ) {
+			interceptors = new HashMap<String, List<ClientInterceptorStrategy>>();
+			
+		}
+		
 		if( clientInterceptor instanceof LogClientInterceptor ) {
 			
 			List<ClientInterceptorStrategy> currentList = new ArrayList<ClientInterceptorStrategy>();
