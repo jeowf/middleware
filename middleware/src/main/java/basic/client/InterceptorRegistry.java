@@ -12,7 +12,7 @@ import patterns.strategy.LogClientInterceptor;
 
 public class InterceptorRegistry {
 	
-	Map<String, List<ClientInterceptorStrategy>> interceptors;
+	static Map<String, List<ClientInterceptorStrategy>> interceptors;
 	
 	public InterceptorRegistry() {
 		
@@ -20,7 +20,7 @@ public class InterceptorRegistry {
 		
 	}
 
-	public void addInterceptor( ClientInterceptorStrategy clientInterceptor ) {
+	public static void addInterceptor( ClientInterceptorStrategy clientInterceptor ) {
 		if( clientInterceptor instanceof LogClientInterceptor ) {
 			
 			List<ClientInterceptorStrategy> currentList = new ArrayList<ClientInterceptorStrategy>();
@@ -39,6 +39,10 @@ public class InterceptorRegistry {
 			
 		}
 		
+	}
+
+	public static Map<String, List<ClientInterceptorStrategy>> getInterceptors() {
+		return interceptors;
 	}
 	
 	
