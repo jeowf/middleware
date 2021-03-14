@@ -23,6 +23,10 @@ public class LookUp
 		this.marshaller = new Marshaller();
 	}
 	
+	public HashMap<String, Long> getIds(){
+		return ids;
+	}
+	
 	private void printHash() 
 	{
 		Set<String> set = ids.keySet();
@@ -30,7 +34,7 @@ public class LookUp
 		System.out.println("---------- Mostrando as chaves contidas no lookup: ------------");
 		for(String e : set) 
 		{
-			System.out.println("O objeto tipo: " + e + "\nestá associado ao id: " + ids.get(e));
+			System.out.println("O objeto tipo: " + e + "\nestï¿½ associado ao id: " + ids.get(e));
 		}
 		System.out.println("----------------------------------------------------------------");
 	}
@@ -44,7 +48,7 @@ public class LookUp
 			
 			//invoker.invoke(marshaller.marshal(rm));
 			
-			System.out.println("Printando o código dentro da consulta com sucesso");
+			System.out.println("Printando o cï¿½digo dentro da consulta com sucesso");
 			printHash();
 			
 			return ids.get(lm.getObjectType());
