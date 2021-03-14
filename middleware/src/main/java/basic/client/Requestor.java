@@ -1,11 +1,18 @@
 package basic.client;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import basic.Marshaller;
 import basic.RemoteError;
+import general.InvocationContext;
 import general.InvocationData;
+import general.LogDTO;
 import general.Message;
 import general.RequestorMessage;
 import general.ServerResponseMessage;
+import patterns.strategy.ClientInterceptorStrategy;
 
 public class Requestor {
 	private long requestorID;
@@ -15,7 +22,7 @@ public class Requestor {
 	
 	public Requestor(ClientRequestHandler clientRequestHandler, Class objectClass) {
 		marshaller = new Marshaller();
-		this.requestorID = 0; // Substituir por um ID v�lido posteriormente
+		this.requestorID = 0; // Substituir por um ID v�lido posteriormente
 		this.clientRequestHandler = clientRequestHandler;
 		this.objectClass = objectClass;
 	}
@@ -24,7 +31,21 @@ public class Requestor {
 		
 		InvocationData invocationData = new InvocationData(id, methodName, args, argsTypes, objectClass.getName());
 		
-		RequestorMessage m = new RequestorMessage(requestorID, invocationData);
+		// Captura a lista de interceptors gerada anteriormente
+		Map<String, List<ClientInterceptorStrategy>> interceptorsReady = InterceptorRegistry.getInterceptors();
+		
+		
+		//Preparando interceptors
+		prepareInterceptor( interceptorsReady, invocationData );
+		
+		// Cria e adiciona interceptors a um novo Invocation Context
+		InvocationContext invocationContext = new InvocationContext();		
+		invocationContext.setInterceptors( interceptorsReady );
+		
+		// Adicionando dados de context de invocação aos dados a serem enviados
+		invocationData.setInvocationContext( invocationContext );
+		
+		RequestorMessage m = new RequestorMessage( requestorID, invocationData );
 		
 		String message = marshaller.marshal(m);
 		
@@ -55,6 +76,15 @@ public class Requestor {
 		//print("Fim");
 	}
 	
+	private void prepareInterceptor(Map<String, List<ClientInterceptorStrategy>> interceptorsReady, InvocationData invocationData) {
+		for( List<ClientInterceptorStrategy> interceptors : interceptorsReady.values() ) {
+			for( ClientInterceptorStrategy interceptor : interceptors ) {
+				interceptor.prepareInterceptor( invocationData );
+				
+			}			
+		}		
+	}
+
 	public String encode(String message, long invokerId) {
 		StringBuffer text = new StringBuffer(message);
 		text.replace( 0 , 0 , "" + invokerId);

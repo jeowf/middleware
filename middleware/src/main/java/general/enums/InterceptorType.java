@@ -7,7 +7,9 @@ public enum InterceptorType {
 		public String getDenominacao() {
 			return "NONE";
 		}	
-	},INTERCEPTOR_LOG {
+	},
+	
+	INTERCEPTOR_LOG {
 		@Override
 		public String getDenominacao() {
 			return "INTERCEPTOR_LOG";

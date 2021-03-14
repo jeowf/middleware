@@ -26,7 +26,7 @@ public class Client {
 		
 		// Construindo o interceptor para log
 		ClientInterceptorStrategy clientInterceptorLog = genderInterceptor( InterceptorType.INTERCEPTOR_LOG );
-		//clientInterceptorLog.buildInterceptor(registryClient, operationType);
+		clientInterceptorLog.buildInterceptor();
 		
 		// Registrando o interceptor na lista
 		//InterceptorRegistry interceptorRegistry = new InterceptorRegistry();
