@@ -28,8 +28,10 @@ public class Client {
 		ClientInterceptorStrategy clientInterceptorLog = genderInterceptor( InterceptorType.INTERCEPTOR_LOG );
 		//clientInterceptorLog.buildInterceptor(registryClient, operationType);
 		
-		InterceptorRegistry interceptorRegistry = new InterceptorRegistry();
-		interceptorRegistry.addInterceptor( clientInterceptorLog );
+		// Registrando o interceptor na lista
+		//InterceptorRegistry interceptorRegistry = new InterceptorRegistry();
+		//interceptorRegistry.addInterceptor( clientInterceptorLog );
+		InterceptorRegistry.addInterceptor( clientInterceptorLog );
 		
 		ClientRequestHandler crh = new ClientRequestHandler();
 		
