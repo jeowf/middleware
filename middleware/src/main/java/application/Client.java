@@ -12,7 +12,7 @@ public class Client {
 	
 	ClientInterceptorStrategy clientInterceptorStrategy;
 	
-	private static ClientInterceptorStrategy buildInterceptor( InterceptorType interceptorType ) {
+	private static ClientInterceptorStrategy genderInterceptor( InterceptorType interceptorType ) {
 		if( interceptorType.equals( InterceptorType.INTERCEPTOR_LOG ) ) {
 			return new LogClientInterceptor();
 			
@@ -25,7 +25,8 @@ public class Client {
 	public static void main(String[] args) {
 		
 		// Construindo o interceptor para log
-		ClientInterceptorStrategy clientInterceptorLog = buildInterceptor( InterceptorType.INTERCEPTOR_LOG );
+		ClientInterceptorStrategy clientInterceptorLog = genderInterceptor( InterceptorType.INTERCEPTOR_LOG );
+		//clientInterceptorLog.buildInterceptor(registryClient, operationType);
 		
 		InterceptorRegistry interceptorRegistry = new InterceptorRegistry();
 		interceptorRegistry.addInterceptor( clientInterceptorLog );
