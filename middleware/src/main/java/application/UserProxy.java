@@ -20,11 +20,12 @@ public class UserProxy extends ClientProxy{
 					new Object[]{nome,
 							senha, 
 							saldo,
-							numAcc} ,
+							numAcc},
 					new String[]{nome.getClass().getName(),
 							senha.getClass().getName(),
 							saldo.getClass().getName(),
 							numAcc.getClass().getName()}));
+			
 			System.out.println("ID DO MENINO " + id);
 			this.realID = id;
 		} catch (RemoteError e) {
@@ -33,21 +34,24 @@ public class UserProxy extends ClientProxy{
 		}
 	}
 
-//	public UserProxy() {
-//		this.clientRequestHandler = new ClientRequestHandler();
-//		this.requestor = new Requestor(clientRequestHandler, User.class);
-//		
-//		//try {
-//			//System.out.println(requestor.invoke(-1, "*constructor" , null, null));
-//			
-//			//Long id = (long) Math.floor((Double) requestor.invoke(-1, "*constructor" , null, null));
-//			//System.out.println("ID DO MENINO " + id);
-//			//this.realID = id;
-//		//} catch (RemoteError e) {
-//			// TODO Auto-generated catch block
-//		//	e.printStackTrace();
-//		//}
-//	}
+	public UserProxy() {
+		super(User.class);
+
+		this.clientRequestHandler = new ClientRequestHandler();
+		this.requestor = new Requestor(clientRequestHandler, User.class);
+		
+		
+		try {
+			System.out.println(requestor.invoke(-1, "*constructor" , null, null));
+			
+			Long id = (long) Math.floor((Double) requestor.invoke(-1, "*constructor" , null, null));
+			System.out.println("ID DO MENINO " + id);
+			this.realID = id;
+		} catch (RemoteError e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	// Fun��o que ir� consultar um objeto na lookup e retornar seu ID
 	public void requestAOR(String objType) throws IOException

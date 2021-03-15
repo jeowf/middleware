@@ -12,7 +12,7 @@ public class Client {
 		
 		Requestor r = new Requestor(crh, String.class);
 		
-		UserProxy up = new UserProxy("RC", "123", 150.0, 12345678);
+		UserProxy up = new UserProxy();
 		
 		up.setNome("Kevin Corno");
 		
