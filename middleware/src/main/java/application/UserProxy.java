@@ -53,21 +53,7 @@ public class UserProxy extends ClientProxy{
 		}
 	}
 	
-	// Fun��o que ir� consultar um objeto na lookup e retornar seu ID
-	public void requestAOR(String objType) throws IOException
-	{
-		try {
-			// Enviamos a mensagem com o c�digo -2 (lookup message) para o invoker, esperando receber o ID do objeto
-			Long id = (long) Math.floor((Double) requestor.invoke(-2, objType , null, null));
-			System.out.println("ID DO MENINO " + id);
-			this.realID = id;
-		} catch (RemoteError e) {
-			throw new IOException("Erro ao obter o ID do objeto requisitado");
-		}
-	}
-	
 	// TODO fazer um requisitor gen�rico.
-	
 	public String getNome() {
 		
 		try {
