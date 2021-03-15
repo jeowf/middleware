@@ -6,7 +6,8 @@ import java.util.Map;
 
 import basic.Marshaller;
 import basic.RemoteError;
-import general.InvocationContext;
+import extension.client.InterceptorRegistry;
+import extension.client.InvocationContext;
 import general.InvocationData;
 import general.LogDTO;
 import general.Message;

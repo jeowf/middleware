@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import extension.client.InvocationContext;
 import patterns.strategy.ClientInterceptorStrategy;
 
 public class InvocationData implements Serializable{

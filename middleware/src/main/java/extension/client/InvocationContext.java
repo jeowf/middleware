@@ -1,4 +1,4 @@
-package general;
+package extension.client;
 
 import java.util.HashMap;
 import java.util.List;

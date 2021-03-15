@@ -2,8 +2,8 @@ package application;
 
 import basic.RemoteError;
 import basic.client.ClientRequestHandler;
-import basic.client.InterceptorRegistry;
 import basic.client.Requestor;
+import extension.client.InterceptorRegistry;
 import general.enums.InterceptorType;
 import patterns.strategy.ClientInterceptorStrategy;
 import patterns.strategy.LogClientInterceptor;
