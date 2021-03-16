@@ -1,0 +1,10 @@
+{IdClient: -1; Operation: *constructor; DataTime->Dia 15; DataTime->Mês 3; DataTime->Ano 2021; DataTime->Hora 6:53:32}{IdClient: -1; Operation: *constructor; DataTime->Dia 15; DataTime->Mês 3; DataTime->Ano 2021; DataTime->Hora 7:16:5}
+{IdClient: -1; Operation: *constructor; DataTime->Dia 15; DataTime->Mês 3; DataTime->Ano 2021; DataTime->Hora 7:16:5}
+{IdClient: -1; Operation: *constructor; DataTime->Dia 15; DataTime->Mês 3; DataTime->Ano 2021; DataTime->Hora 7:16:5}
+{IdClient: -1; Operation: *constructor; DataTime->Dia 15; DataTime->Mês 3; DataTime->Ano 2021; DataTime->Hora 7:16:5}
+{IdClient: -1; Operation: *constructor; DataTime->Dia 15; DataTime->Mês 3; DataTime->Ano 2021; DataTime->Hora 7:16:5}
+{IdClient: -1; Operation: *constructor; DataTime->Dia 15; DataTime->Mês 3; DataTime->Ano 2021; DataTime->Hora 7:17:27}
+{IdClient: -1; Operation: *constructor; DataTime->Dia 15; DataTime->Mês 3; DataTime->Ano 2021; DataTime->Hora 7:16:5}
+{IdClient: -1; Operation: *constructor; DataTime->Dia 15; DataTime->Mês 3; DataTime->Ano 2021; DataTime->Hora 7:16:5}
+{IdClient: -1; Operation: *constructor; DataTime->Dia 15; DataTime->Mês 3; DataTime->Ano 2021; DataTime->Hora 7:17:27}
+{IdClient: -1; Operation: *constructor; DataTime->Dia 15; DataTime->Mês 3; DataTime->Ano 2021; DataTime->Hora 7:17:27}

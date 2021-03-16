@@ -3,16 +3,16 @@ package application;
 import basic.RemoteError;
 import basic.client.ClientRequestHandler;
 import basic.client.Requestor;
-import extension.client.InterceptorRegistry;
+import extension.client.InterceptorRegistryClient;
 import general.enums.InterceptorType;
-import patterns.strategy.ClientInterceptorStrategy;
+import patterns.strategy.InterceptorStrategy;
 import patterns.strategy.LogClientInterceptor;
 
 public class Client {
 	
-	ClientInterceptorStrategy clientInterceptorStrategy;
+	InterceptorStrategy clientInterceptorStrategy;
 	
-	private static ClientInterceptorStrategy genderInterceptor( InterceptorType interceptorType ) {
+	private static InterceptorStrategy genderInterceptor( InterceptorType interceptorType ) {
 		if( interceptorType.equals( InterceptorType.INTERCEPTOR_LOG ) ) {
 			return new LogClientInterceptor();
 			
@@ -25,13 +25,13 @@ public class Client {
 	public static void main(String[] args) {
 		
 		// Construindo o interceptor para log
-		ClientInterceptorStrategy clientInterceptorLog = genderInterceptor( InterceptorType.INTERCEPTOR_LOG );
+		InterceptorStrategy clientInterceptorLog = genderInterceptor( InterceptorType.INTERCEPTOR_LOG );
 		clientInterceptorLog.buildInterceptor();
 		
 		// Registrando o interceptor na lista
 		//InterceptorRegistry interceptorRegistry = new InterceptorRegistry();
 		//interceptorRegistry.addInterceptor( clientInterceptorLog );
-		InterceptorRegistry.addInterceptor( clientInterceptorLog );
+		InterceptorRegistryClient.addInterceptor( (LogClientInterceptor) clientInterceptorLog );
 		
 		ClientRequestHandler crh = new ClientRequestHandler();
 		

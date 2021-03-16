@@ -7,28 +7,28 @@ import java.util.List;
 import java.util.Map;
 
 import general.enums.InterceptorType;
-import patterns.strategy.ClientInterceptorStrategy;
+import patterns.strategy.InterceptorStrategy;
 import patterns.strategy.LogClientInterceptor;
 
-public class InterceptorRegistry {
+public class InterceptorRegistryClient {
 	
-	static Map<String, List<ClientInterceptorStrategy>> interceptors;
+	static Map<String, List<LogClientInterceptor>> interceptors;
 	
-	public InterceptorRegistry() {
+	public InterceptorRegistryClient() {
 		
-		interceptors = new HashMap<String, List<ClientInterceptorStrategy>>();
+		interceptors = new HashMap<String, List<LogClientInterceptor>>();
 		
 	}
 
-	public static void addInterceptor( ClientInterceptorStrategy clientInterceptor ) {
+	public static void addInterceptor( LogClientInterceptor clientInterceptor ) {
 		if( interceptors == null ) {
-			interceptors = new HashMap<String, List<ClientInterceptorStrategy>>();
+			interceptors = new HashMap<String, List<LogClientInterceptor>>();
 			
 		}
 		
 		if( clientInterceptor instanceof LogClientInterceptor ) {
 			
-			List<ClientInterceptorStrategy> currentList = new ArrayList<ClientInterceptorStrategy>();
+			List<LogClientInterceptor> currentList = new ArrayList<LogClientInterceptor>();
 			if( !interceptors.containsKey( InterceptorType.INTERCEPTOR_LOG.getDenominacao() ) ) {
 				currentList.add( clientInterceptor );
 				
@@ -46,7 +46,7 @@ public class InterceptorRegistry {
 		
 	}
 
-	public static Map<String, List<ClientInterceptorStrategy>> getInterceptors() {
+	public static Map<String, List<LogClientInterceptor>> getInterceptors() {
 		return interceptors;
 	}
 	

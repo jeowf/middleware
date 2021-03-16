@@ -6,14 +6,15 @@ import java.util.Map;
 
 import basic.Marshaller;
 import basic.RemoteError;
-import extension.client.InterceptorRegistry;
-import extension.client.InvocationContext;
+import extension.client.InterceptorRegistryClient;
+import extension.client.InvocationContextClient;
 import general.InvocationData;
 import general.LogDTO;
 import general.Message;
 import general.RequestorMessage;
 import general.ServerResponseMessage;
-import patterns.strategy.ClientInterceptorStrategy;
+import patterns.strategy.InterceptorStrategy;
+import patterns.strategy.LogClientInterceptor;
 
 public class Requestor {
 	private long requestorID;
@@ -33,14 +34,14 @@ public class Requestor {
 		InvocationData invocationData = new InvocationData(id, methodName, args, argsTypes, objectClass.getName());
 		
 		// Captura a lista de interceptors gerada anteriormente
-		Map<String, List<ClientInterceptorStrategy>> interceptorsReady = InterceptorRegistry.getInterceptors();
+		Map<String, List<LogClientInterceptor>> interceptorsReady = InterceptorRegistryClient.getInterceptors();
 		
 		
 		//Preparando interceptors
 		prepareInterceptor( interceptorsReady, invocationData );
 		
 		// Cria e adiciona interceptors a um novo Invocation Context
-		InvocationContext invocationContext = new InvocationContext();		
+		InvocationContextClient invocationContext = new InvocationContextClient();		
 		invocationContext.setInterceptors( interceptorsReady );
 		
 		// Adicionando dados de context de invocação aos dados a serem enviados
@@ -77,9 +78,9 @@ public class Requestor {
 		//print("Fim");
 	}
 	
-	private void prepareInterceptor(Map<String, List<ClientInterceptorStrategy>> interceptorsReady, InvocationData invocationData) {
-		for( List<ClientInterceptorStrategy> interceptors : interceptorsReady.values() ) {
-			for( ClientInterceptorStrategy interceptor : interceptors ) {
+	private void prepareInterceptor(Map<String, List<LogClientInterceptor>> interceptorsReady, InvocationData invocationData) {
+		for( List<LogClientInterceptor> interceptors : interceptorsReady.values() ) {
+			for( LogClientInterceptor interceptor : interceptors ) {
 				interceptor.prepareInterceptor( invocationData );
 				
 			}			

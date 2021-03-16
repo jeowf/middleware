@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import extension.client.InvocationContext;
-import patterns.strategy.ClientInterceptorStrategy;
+import extension.client.InvocationContextClient;
+import patterns.strategy.InterceptorStrategy;
 
 public class InvocationData implements Serializable{
 	
@@ -14,7 +14,7 @@ public class InvocationData implements Serializable{
 	private Object[] args;
 	private String[] argsTypes;
 	private String objectClass;
-	private InvocationContext invocationContext;
+	private InvocationContextClient invocationContext;
 
 	public InvocationData(long objectID, String someMethod, Object[] args, String[] argsTypes, String objectClass) {
 		this.objectID = objectID;
@@ -24,7 +24,7 @@ public class InvocationData implements Serializable{
 		
 		this.argsTypes =argsTypes;
 		
-		this.invocationContext = new InvocationContext();
+		this.invocationContext = new InvocationContextClient();
 	}
 
 	public long getObjectID() {
@@ -67,8 +67,14 @@ public class InvocationData implements Serializable{
 		this.argsTypes = argsType;
 	}
 
-	public void setInvocationContext(InvocationContext invocationContext) {
+	public void setInvocationContext(InvocationContextClient invocationContext) {
 		this.invocationContext = invocationContext;
 		
 	}
+
+	public InvocationContextClient getInvocationContext() {
+		return invocationContext;
+	}
+	
+	
 }

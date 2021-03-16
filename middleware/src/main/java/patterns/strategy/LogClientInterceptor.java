@@ -5,13 +5,14 @@ import java.util.Calendar;
 import general.InvocationData;
 import general.LogDTO;
 
-public class LogClientInterceptor implements ClientInterceptorStrategy{
+public class LogClientInterceptor extends InterceptorStrategy{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean ativo;
 	private LogDTO log;
-	
-	private static volatile ClientInterceptorStrategy instance;
-	private static Object mutex = new Object();
 	
 	public LogClientInterceptor() {
 		this.ativo = false;
@@ -19,20 +20,7 @@ public class LogClientInterceptor implements ClientInterceptorStrategy{
 		
 	}
 	
-	/*
-	public ClientInterceptorStrategy buildInterceptor( boolean ativo ) {
-		ClientInterceptorStrategy result = instance;
-		
-		if (result == null) {
-			synchronized ( mutex ) {
-				result = instance;
-				if (result == null)
-					instance = result = new LogClientInterceptor( ativo );
-			}
-		}
-		return result;
-	}
-	*/
+	
 	public boolean isAtivo() {
 		return ativo;
 	}
@@ -53,6 +41,19 @@ public class LogClientInterceptor implements ClientInterceptorStrategy{
 		this.log.setRegistryClient( idClient );
 		
 	}
+
+	public LogDTO getLog() {
+		return log;
+	}
+
+	public void setLog(LogDTO log) {
+		this.log = log;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+	
 	
 	
 

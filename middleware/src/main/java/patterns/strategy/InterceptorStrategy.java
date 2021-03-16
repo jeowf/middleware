@@ -4,10 +4,15 @@ import java.io.Serializable;
 
 import general.InvocationData;
 
-public interface ClientInterceptorStrategy extends Serializable{
+public abstract class InterceptorStrategy implements Serializable{
 	
-	public void buildInterceptor();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public abstract void buildInterceptor();
 	
-	public void prepareInterceptor( InvocationData invocationData );
+	public abstract void prepareInterceptor( InvocationData invocationData );
 
 }

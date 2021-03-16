@@ -14,6 +14,7 @@ import java.util.Set;
 
 import basic.Marshaller;
 import basic.RemoteError;
+import extension.server.InvocationContextServer;
 import general.ServerResponseMessage;
 
 public class ServerRequestHandler {
@@ -133,7 +134,7 @@ public class ServerRequestHandler {
 						
 			Invoker invoker = invokerRegistry.getInvoker(-1);
 			
-			logger(String.format("Message Change.....: %s\n", data));
+			logger(String.format("Message Change.....: %s\n", data));			
 			
 			Object obj = invoker.invoke(dataDecode);
 			
