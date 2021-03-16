@@ -40,20 +40,30 @@ public class UserProxy extends ClientProxy{
 		this.clientRequestHandler = new ClientRequestHandler();
 		this.requestor = new Requestor(clientRequestHandler, User.class);
 		
-		
+		//try {
+			//System.out.println(requestor.invoke(-1, "*constructor" , null, null));
+			//Long id = (long) Math.floor((Double) requestor.invoke(-1, "*constructor" , null, null));
+			//System.out.println("ID DO MENINO " + id);
+			//this.realID = id;
+		//} catch (RemoteError e) {
+			// TODO Auto-generated catch block
+		//	e.printStackTrace();
+		//}
+	}
+	
+	// Função que irá consultar um objeto na lookup e retornar seu ID
+	public void requestAOR(String objType) throws IOException
+	{
 		try {
-			System.out.println(requestor.invoke(-1, "*constructor" , null, null));
-			
-			Long id = (long) Math.floor((Double) requestor.invoke(-1, "*constructor" , null, null));
+			// Enviamos a mensagem com o código -2 (lookup message) para o invoker, esperando receber o ID do objeto
+			Long id = (long) Math.floor((Double) requestor.invoke(-2, objType , null, null));
 			System.out.println("ID DO MENINO " + id);
 			this.realID = id;
 		} catch (RemoteError e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new IOException("Erro ao obter o ID do objeto requisitado");
 		}
 	}
 	
-	// TODO fazer um requisitor genï¿½rico.
 	public String getNome() {
 		
 		try {
