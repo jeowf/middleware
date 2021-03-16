@@ -2,6 +2,7 @@ package application;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import basic.RemoteError;
 import basic.client.ClientRequestHandler;
@@ -9,8 +10,7 @@ import basic.client.Requestor;
 
 public class Client {
 
-	// Lista de id's dos objetos que o cliente pode utilizar
-	private static ArrayList<Integer> ids = new ArrayList<Integer>();
+	private static ArrayList<String> nomes = new ArrayList<String>();
 	
 	// Função para invocar o lookup e consultar um ID
 	public static boolean consutarId(String objType, UserProxy up) 
@@ -29,6 +29,19 @@ public class Client {
 	
 	public static void main(String[] args) {
 		
+		nomes.add("Bruna");
+		nomes.add("Francisco");
+		nomes.add("João");
+		nomes.add("Maria");
+		nomes.add("Ana Clara");
+		nomes.add("Roberval");
+		nomes.add("Augusto");
+		nomes.add("Caroline");
+		nomes.add("Ricardo");
+		nomes.add("Elenice");
+		
+		Random rand = new Random();
+		
 		ClientRequestHandler crh = new ClientRequestHandler();
 		
 		Requestor r = new Requestor(crh, String.class);
@@ -37,13 +50,13 @@ public class Client {
 		
 		consutarId("RC", up);
 		
-		up.setNome("Kevin Corno");
+		up.setNome(nomes.get(rand.nextInt(10)));
 		
 		System.out.println("Nome: " + up.getNome());
 		
 		consutarId("Kevin Corno", up);
 		
-		up.setNome("RC");
+		up.setNome(nomes.get(rand.nextInt(10)));
 		
 		System.out.println("Nome: " + up.getNome());
 		
