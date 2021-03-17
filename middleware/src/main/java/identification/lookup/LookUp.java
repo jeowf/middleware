@@ -41,12 +41,28 @@ public class LookUp
 		{
 			ids.put(objectName, objectId);
 			
-			System.out.println("Objeto " + objectName + " cadastrado com sucesso");
+			System.out.println("Objeto " + objectName + " cadastrado com sucesso!!!");
 			
 			return true;
 		}
 		
 		System.out.println("O objeto fornecido já foi cadastrado!!!");
+		
+		return false;
+	}
+	
+	public boolean unbind(String objectName) 
+	{
+		if(ids.containsKey(objectName)) 
+		{
+			ids.remove(objectName);
+			
+			System.out.println("Objeto " + objectName + " removido com sucesso!!!");
+			
+			return true;
+		}
+		
+		System.out.println("Não existe um objeto com o nome " + objectName + " cadastrado");
 		
 		return false;
 	}
