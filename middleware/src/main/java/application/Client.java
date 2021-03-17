@@ -1,5 +1,7 @@
 package application;
 
+import java.io.IOException;
+
 import basic.RemoteError;
 import basic.client.ClientRequestHandler;
 import basic.client.Requestor;
@@ -8,19 +10,21 @@ public class Client {
 
 	public static void main(String[] args) {
 		
-		ClientRequestHandler crh = new ClientRequestHandler();
+		//ClientRequestHandler crh = new ClientRequestHandler();
 		
-		Requestor r = new Requestor(crh, String.class);
+		//Requestor r = new Requestor(crh, String.class);
 		
-		UserProxy up = new UserProxy("RC", "123", 150.0, 12345678);
+		UserProxy up = new UserProxy();
+		try {
+			up.requestAOR("Kevin");
+			System.out.println("Nome: " + up.getNome());
+			up.setNome("Kevin Corno");			
+			System.out.println("Nome: " + up.getNome());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
-		up.setNome("Kevin Corno");
 		
-		System.out.println("Nome: " + up.getNome());
-		
-		up.setNome("RC");
-		
-		System.out.println("Nome: " + up.getNome());
 		
 		//System.out.println(up.getNome().);
 

@@ -32,6 +32,11 @@ public class UserProxy extends ClientProxy{
 			e.printStackTrace();
 		}
 	}
+	
+	public UserProxy() {
+		super(User.class);
+		
+	}
 
 //	public UserProxy() {
 //		this.clientRequestHandler = new ClientRequestHandler();
@@ -153,4 +158,5 @@ public class UserProxy extends ClientProxy{
 			e.printStackTrace();
 		}
 	}
+	
 }
