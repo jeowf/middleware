@@ -3,6 +3,8 @@ package identification.lookup;
 import java.util.HashMap;
 import java.util.Set;
 
+import javax.management.ObjectName;
+
 import basic.Marshaller;
 import basic.RemoteError;
 import basic.server.Invoker;
@@ -51,11 +53,29 @@ public class LookUp
 		return false;
 	}
 	
-	public boolean unbind(String objectName) 
+	public boolean unbind(String message) 
 	{
+		LookUpMessage lm = (LookUpMessage) marshaller.unmarshal(message, LookUpMessage.class);
+		String objectName = lm.getObjectType();
 		if(ids.containsKey(objectName)) 
 		{
 			ids.remove(objectName);
+
+			Invoker invoker;
+			try {
+				invoker = invokerRegistry.getInvoker(-1);
+			
+				lm.getInvocationData().setSomeMethod("*destroy");
+				
+				RequestorMessage rm = new RequestorMessage(lm.getId(), lm.getInvocationData());
+				
+				invoker.invoke(marshaller.marshal(rm));
+			} catch (RemoteError e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			printHash();
 			
 			System.out.println("Objeto " + objectName + " removido com sucesso!!!");
 			

@@ -7,11 +7,15 @@ import java.lang.reflect.Method;
 import basic.Marshaller;
 import basic.RemoteError;
 import general.RequestorMessage;
+import lifecycle.LifecycleManagerInterface;
+import lifecycle.LifecycleManagerRegistry;
+import lifecycle.PerRequestLifecycleManager;
 
 public class Invoker {
 	private long invokerID;
 	private Marshaller marshaller;
 	private InstanceList il;
+	private LifecycleManagerRegistry lr;
 	
 	
 	public Invoker(long invokerID) {
@@ -19,6 +23,7 @@ public class Invoker {
 		this.invokerID = invokerID;
 		this.marshaller = new Marshaller();
 		this.il = InstanceList.getInstance();
+		this.lr = new LifecycleManagerRegistry() ; 
 	}
 
 	public Object invoke(String message) throws RemoteError {
@@ -44,7 +49,6 @@ public class Invoker {
 			
 			Class<?> objectClass = Class.forName(rm.getInvocationData().getObjectClass());
 			
-			
 			//String s = "pão";
 			try {
 				//System.out.println(objectClass.getName());
@@ -55,12 +59,26 @@ public class Invoker {
 					
 					return createObject(args,constructor,objectClass);
 					
-				} else {
+				}
+				else if (methodName.equals("*destroy")) {
+					System.out.println(methodName);
+					return il.rmInstance(objectClass);					
+				} 
+				else {
 					Method method;
 					method = objectClass.getMethod(methodName,	argsT);
 					Object obj = il.getInstance(objectClass, rm.getInvocationData().getObjectID());
 					
+					//Long id = rm.getInvocationData().getObjectID();
+					//LifecycleManagerInterface pc = lr.getLifecycleManager(id); 
+					//Object obj = il.getInstance(objectClass, rm.getInvocationData().getObjectID());
+					//Object ro = pc.invocationArrived(id);
 					return invokeMethod(args, method, obj);
+					//Object obj = invokeMethod(args, method, ro);
+					
+					//pc.invocationDone(id);
+					
+					///return obj;
 				}
 				
 				

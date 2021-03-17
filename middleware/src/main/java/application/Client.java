@@ -28,6 +28,18 @@ public class Client {
 		
 		return true;
 	}
+
+	
+	public static void destroy(String objType, UserProxy up) {
+		try {
+			up.destroyOBJ(objType);
+		}
+		catch(IOException e) 
+		{
+			System.out.println("Erro Destruindo o objeto");
+		}
+	}
+	
 	
 	public static void main(String[] args) {
 		
@@ -51,14 +63,16 @@ public class Client {
 		
 		UserProxy up = new UserProxy();
 		
-		consutarId("RC", up);
+		String name = nomes.get(rand.nextInt(10));
 		
-		up.setNome(nomes.get(rand.nextInt(10)));
-
+		consutarId(name, up);
 		
-		consutarId("Kevin Corno", up);
+		up.setNome(name);
 		
-		up.setNome(nomes.get(rand.nextInt(10)));
+		System.out.println(up.getNome());
+		
+		destroy(name, up);
+		System.out.println(up.getNome());
 		
 		
 		//System.out.println(up.getNome().);

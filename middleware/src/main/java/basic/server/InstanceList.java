@@ -11,13 +11,14 @@ import basic.RemoteError;
 public class InstanceList {
 	private static volatile InstanceList instance;
 	private static Object mutex = new Object();
+	private Long contador;
 	
 	private ConcurrentHashMap<Class<?>, HashMap<Long,Object>> instances;
 		
 	private InstanceList() {
 		instances = new ConcurrentHashMap<Class<?>, HashMap<Long, Object>>();
-		
-		
+		long x = 0;
+		this.contador = x;
 	}
 
 	public Object getInstance(Class<?> cls, long id) throws RemoteError{
@@ -25,6 +26,10 @@ public class InstanceList {
 			throw new RemoteError(); // instancia nao encontrada
 		
 		return instances.get(cls).get(id);
+	}
+	
+	public Object rmInstance(Class<?> cls) {
+		return instances.remove(cls);
 	}
 	
 	public Long addInstance(Class<?> cls, Object obj) throws RemoteError{
@@ -35,7 +40,8 @@ public class InstanceList {
 		if (instances.get(cls).containsKey(id))
 			throw new RemoteError(); // id em uso
 		*/
-		Long id = (long) instances.get(cls).size();
+		//Long id = (long) instances.get(cls).size();
+		Long id = contador++;
 		System.out.println("ID : " + id);
 		instances.get(cls).put(id, obj);
 		

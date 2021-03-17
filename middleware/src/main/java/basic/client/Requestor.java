@@ -42,7 +42,17 @@ public class Requestor {
 			
 			message = encode(message, 28, 2);
 			
-			System.out.println("Mensagem do lookup:" + message);
+			System.out.println("Mensagem do lookup: " + message);
+		}
+		else if(id == -3) 
+		{
+			LookUpMessage m = new LookUpMessage(requestorID, methodName, invocationData);
+			
+			message = marshaller.marshal(m);
+			
+			message = encode(message, 29, 2);
+			
+			System.out.println("Mensagem do lookup: " + message);
 		}
 		else 
 		{
@@ -51,6 +61,10 @@ public class Requestor {
 			 message = marshaller.marshal(m);
 			//encodeMessage (adicionar o ID do invoker na string de mensagem)
 			message = encode(message, 100, 1);
+			
+			System.out.println("Mensagem: " + message);
+			
+			
 		}
 		
 		//System.out.println(message);
