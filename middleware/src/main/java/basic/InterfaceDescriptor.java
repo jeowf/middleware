@@ -1,5 +1,7 @@
 package basic;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -16,12 +18,16 @@ public class InterfaceDescriptor {
 		
 		Class[] classes = new Class[]{User.class};
 		
+		String path = "E:\\Code\\middleware\\middleware\\src\\main\\java\\application"; 
+		String pkg = "application";
+		
 		for (Class c : classes) {
 			String[] gambs = c.getName().split("\\.");
 			String className = gambs[gambs.length-1];
 			
 			//Nome da classe
-			String str = "public class " + className + "Proxy" + 
+			String str = "package " + pkg + ";\n\n" + 
+						 "public class " + className + "Proxy" + 
 						 " extends " + proxyClass.getName() +  "{\n"; 
 			
 			//Atributos
@@ -107,6 +113,16 @@ public class InterfaceDescriptor {
 			str += "}";
 			
 			System.out.println(str);
+			
+			try {
+			      FileWriter myWriter = new FileWriter(path + "\\" + className + "Proxy.java");
+			      myWriter.write(str);
+			      myWriter.close();
+			      System.out.println("Successfully wrote to the file.");
+			    } catch (IOException e) {
+			      System.out.println("An error occurred.");
+			      e.printStackTrace();
+			    }
 			
 			
 		}
