@@ -28,7 +28,7 @@ public class ServerRequestHandler {
 	
 	public ServerRequestHandler() {
 		invokerRegistry = InvokerRegistry.getInstance();
-		serverConfig = new ServerConfig();
+		serverConfig = ServerConfig.getInstance();
 		lookup = new LookUp();
 	}
 	
@@ -36,8 +36,8 @@ public class ServerRequestHandler {
 		
 		try 
 		{
-			InetAddress hostIP= InetAddress.getLocalHost();
-			int port = 10000;
+			InetAddress hostIP= serverConfig.getHostIP();
+			int port = serverConfig.getServerPort();
 			logger(String.format("Trying to accept connections on %s:%d...",
 					hostIP.getHostAddress(), port));
 			selector = Selector.open();
