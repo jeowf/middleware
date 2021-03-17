@@ -51,14 +51,17 @@ public class Client {
 		
 		UserProxy up = new UserProxy();
 		
-		consutarId("RC", up);
+		consutarId("User1 Teste", up);
 		
-		up.setNome(nomes.get(rand.nextInt(10)));
-
+		System.out.println("Primeiro get para user1: " + up.getNome());
+		up.setNome("Carlinhos");
+		System.out.println("Segundo get para user1: " + up.getNome());
 		
-		consutarId("Kevin Corno", up);
+		consutarId("User2 Teste", up);
 		
-		up.setNome(nomes.get(rand.nextInt(10)));
+		System.out.println("Primeiro get para user2: " + up.getNome());
+		up.setNome("Marcos");
+		System.out.println("Segundo get para user2: " + up.getNome());
 		
 		
 		//System.out.println(up.getNome().);

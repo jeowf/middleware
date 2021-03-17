@@ -1,7 +1,7 @@
 package identification.lookup;
 
-import java.util.HashMap;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import basic.Marshaller;
 import basic.RemoteError;
@@ -13,14 +13,28 @@ import general.RequestorMessage;
 public class LookUp 
 {
 	private InvokerRegistry invokerRegistry;
-	private HashMap<String, Long> ids;
+	private ConcurrentHashMap<String, Long> ids;
 	private Marshaller marshaller;
 	
-	public LookUp() 
-	{
-		this.ids = new HashMap<String, Long>();
+	private static volatile LookUp instance;
+	private static Object mutex = new Object();
+		
+	private LookUp() {
+		this.ids = new ConcurrentHashMap<String, Long>();
 		this.invokerRegistry = InvokerRegistry.getInstance();
 		this.marshaller = new Marshaller();
+	}
+	
+	public static LookUp getInstance() {
+		LookUp result = instance;
+		if (result == null) {
+			synchronized (mutex) {
+				result = instance;
+				if (result == null)
+					instance = result = new LookUp();
+			}
+		}
+		return result;
 	}
 	
 	private void printHash() 
@@ -72,11 +86,8 @@ public class LookUp
 		LookUpMessage lm = (LookUpMessage) marshaller.unmarshal(message, LookUpMessage.class);
 		if(ids.containsKey(lm.getObjectType())) 
 		{	
-			//RequestorMessage rm = new RequestorMessage(lm.getId(), lm.getInvocationData());
 			
-			//invoker.invoke(marshaller.marshal(rm));
-			
-			System.out.println("Printando o código dentro da consulta com sucesso");
+			//System.out.println("Printando o código dentro da consulta com sucesso");
 			printHash();
 			
 			return ids.get(lm.getObjectType());

@@ -29,7 +29,7 @@ public class ServerRequestHandler {
 	public ServerRequestHandler() {
 		invokerRegistry = InvokerRegistry.getInstance();
 		serverConfig = new ServerConfig();
-		lookup = new LookUp();
+		lookup = LookUp.getInstance();
 	}
 	
 	public void receive() throws RemoteError{
