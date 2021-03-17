@@ -35,6 +35,22 @@ public class LookUp
 		System.out.println("----------------------------------------------------------------");
 	}
 	
+	public boolean bind(String objectName, Long objectId) 
+	{
+		if(!ids.containsKey(objectName)) 
+		{
+			ids.put(objectName, objectId);
+			
+			System.out.println("Objeto " + objectName + " cadastrado com sucesso");
+			
+			return true;
+		}
+		
+		System.out.println("O objeto fornecido já foi cadastrado!!!");
+		
+		return false;
+	}
+	
 	public Long lookup(String message) 
 	{
 		LookUpMessage lm = (LookUpMessage) marshaller.unmarshal(message, LookUpMessage.class);
