@@ -62,21 +62,6 @@ public class Client {
 		System.out.println("Primeiro get para user2: " + up.getNome());
 		up.setNome("Marcos");
 		System.out.println("Segundo get para user2: " + up.getNome());
-		
-		
-		//System.out.println(up.getNome().);
-
-
-//		
-//		try {
-//			System.out.println((String) r.invoke(0, "equals",
-//					new Object[]{"pão"}, 
-//
-//					new String[] {Object.class.getName()}));
-//		} catch (RemoteError e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 
 	}
 }

@@ -3,6 +3,8 @@ package basic.client;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import basic.server.ServerConfig;
+
 // Singleton
 public class ClientConfig {
 	public static final int BUFFER_SIZE = 1024;
@@ -14,7 +16,7 @@ public class ClientConfig {
 	private int serverPort;
 	
 	private ClientConfig() {
-		this.serverPort = 10000;
+		this.serverPort = ServerConfig.SERVER_PORT;
 		
 		try {
 			this.hostIP = InetAddress.getLocalHost();
