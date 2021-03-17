@@ -14,32 +14,6 @@ public class UserProxy extends basic.client.ClientProxy{
 		}
 	}
 
-	public java.lang.String getSenha(){
-		try{
-			return (java.lang.String) requestor.invoke(realID,"getSenha",null,null);
-		} catch (basic.RemoteError e){
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public void setNumAcc(java.lang.Integer arg0){
-		try{
-			requestor.invoke(realID,"setNumAcc",new Object[]{arg0},new String[]{arg0.getClass().getName()});
-		} catch (basic.RemoteError e){
-			e.printStackTrace();
-		}
-	}
-
-	public java.lang.String getNome(){
-		try{
-			return (java.lang.String) requestor.invoke(realID,"getNome",null,null);
-		} catch (basic.RemoteError e){
-			e.printStackTrace();
-			return null;
-		}
-	}
-
 	public void setSaldo(java.lang.Double arg0){
 		try{
 			requestor.invoke(realID,"setSaldo",new Object[]{arg0},new String[]{arg0.getClass().getName()});
@@ -48,18 +22,17 @@ public class UserProxy extends basic.client.ClientProxy{
 		}
 	}
 
-	public java.lang.Double getSaldo(){
-		try{
-			return (java.lang.Double) requestor.invoke(realID,"getSaldo",null,null);
-		} catch (basic.RemoteError e){
-			e.printStackTrace();
-			return null;
-		}
-	}
-
 	public void setSenha(java.lang.String arg0){
 		try{
 			requestor.invoke(realID,"setSenha",new Object[]{arg0},new String[]{arg0.getClass().getName()});
+		} catch (basic.RemoteError e){
+			e.printStackTrace();
+		}
+	}
+
+	public void setNumAcc(java.lang.Integer arg0){
+		try{
+			requestor.invoke(realID,"setNumAcc",new Object[]{arg0},new String[]{arg0.getClass().getName()});
 		} catch (basic.RemoteError e){
 			e.printStackTrace();
 		}
@@ -73,9 +46,36 @@ public class UserProxy extends basic.client.ClientProxy{
 		}
 	}
 
+	public java.lang.String getSenha(){
+		try{
+			return (java.lang.String) requestor.invoke(realID,"getSenha",null,null);
+		} catch (basic.RemoteError e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public java.lang.Integer getNumAcc(){
 		try{
 			return (java.lang.Integer) requestor.invoke(realID,"getNumAcc",null,null);
+		} catch (basic.RemoteError e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public java.lang.String getNome(){
+		try{
+			return (java.lang.String) requestor.invoke(realID,"getNome",null,null);
+		} catch (basic.RemoteError e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public java.lang.Double getSaldo(){
+		try{
+			return (java.lang.Double) requestor.invoke(realID,"getSaldo",null,null);
 		} catch (basic.RemoteError e){
 			e.printStackTrace();
 			return null;
