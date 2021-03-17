@@ -54,9 +54,9 @@ public class Client {
 		consutarId("RC", up);
 		
 		up.setNome(nomes.get(rand.nextInt(10)));
-
+		System.out.println(up.getNome());
 		
-		consutarId("Kevin Corno", up);
+		consutarId("Kevin", up);
 		
 		up.setNome(nomes.get(rand.nextInt(10)));
 		
