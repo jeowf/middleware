@@ -72,7 +72,7 @@ public class Client {
 		System.out.println(up.getNome());
 		
 		destroy(name, up);
-		System.out.println(up.getNome());
+		//System.out.println(up.getNome());
 		
 		
 		//System.out.println(up.getNome().);

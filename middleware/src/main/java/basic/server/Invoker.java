@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import basic.Marshaller;
 import basic.RemoteError;
 import general.RequestorMessage;
+import lifecycle.ClientDependentLifecycleManager;
 import lifecycle.LifecycleManagerInterface;
 import lifecycle.LifecycleManagerRegistry;
 import lifecycle.PerRequestLifecycleManager;
@@ -14,7 +15,7 @@ import lifecycle.PerRequestLifecycleManager;
 public class Invoker {
 	private long invokerID;
 	private Marshaller marshaller;
-	private InstanceList il;
+	private ClientDependentLifecycleManager cdlm;
 	private LifecycleManagerRegistry lr;
 	
 	
@@ -22,7 +23,7 @@ public class Invoker {
 		super();
 		this.invokerID = invokerID;
 		this.marshaller = new Marshaller();
-		this.il = InstanceList.getInstance();
+		this.cdlm = ClientDependentLifecycleManager.getInstance();
 		this.lr = new LifecycleManagerRegistry() ; 
 	}
 
@@ -31,8 +32,6 @@ public class Invoker {
 		RequestorMessage rm = (RequestorMessage) marshaller.unmarshal(message, RequestorMessage.class);
 					
 		try {
-			//Class<?> cls = Class.forName(o);
-			//System.out.println(cls.getName());
 			String[] argsTypes = rm.getInvocationData().getArgsTypes();
 			Object[] args = rm.getInvocationData().getArgs();
 			
@@ -62,12 +61,12 @@ public class Invoker {
 				}
 				else if (methodName.equals("*destroy")) {
 					System.out.println(methodName);
-					return il.rmInstance(objectClass);					
+					return cdlm.rmInstance(objectClass);					
 				} 
 				else {
 					Method method;
 					method = objectClass.getMethod(methodName,	argsT);
-					Object obj = il.getInstance(objectClass, rm.getInvocationData().getObjectID());
+					Object obj = cdlm.getInstance(objectClass, rm.getInvocationData().getObjectID());
 					
 					//Long id = rm.getInvocationData().getObjectID();
 					//LifecycleManagerInterface pc = lr.getLifecycleManager(id); 
@@ -124,7 +123,7 @@ public class Invoker {
 		
 		try {
 			Object obj = constructor.newInstance(args);
-			return il.addInstance(cls, obj);
+			return cdlm.addInstance(cls, obj);
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
