@@ -37,7 +37,7 @@ public class InterfaceDescriptor {
 					str += "\t\t\t" + "Long id = (long) Math.floor((Double) requestor.invoke(-2, objType , null, null))" + ";\n";
 					str += "\t\t\t" + "this.realID = id;\n";
 				str += "\t\t" + "} catch (" + remoteErrorClass.getName() + " e){\n";
-					str += "\t\t\t" + "throw new IOException(\"Erro ao obter o ID do objeto requisitado\");\n";
+					str += "\t\t\t" + "throw new java.io.IOException(\"Erro ao obter o ID do objeto requisitado\");\n";
 				str += "\t\t" + "}\n";
 			str += "\t}\n\n";
 			
@@ -97,6 +97,8 @@ public class InterfaceDescriptor {
 						str += ");\n";
 					str += "\t\t" + "} catch (" + remoteErrorClass.getName() + " e){\n";
 						str += "\t\t\t" + "e.printStackTrace();\n";
+						if (!m.getReturnType().getName().equals("void"))
+						str += "\t\t\t" + "return null;\n";
 					str += "\t\t" + "}\n";
 				
 				str += "\t}\n\n";
