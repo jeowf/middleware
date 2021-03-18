@@ -8,15 +8,13 @@ import basic.Marshaller;
 import basic.RemoteError;
 import general.RequestorMessage;
 import lifecycle.ClientDependentLifecycleManager;
-import lifecycle.LifecycleManagerInterface;
-import lifecycle.LifecycleManagerRegistry;
 import lifecycle.PerRequestLifecycleManager;
 
 public class Invoker {
 	private long invokerID;
 	private Marshaller marshaller;
 	private ClientDependentLifecycleManager cdlm;
-	private LifecycleManagerRegistry lr;
+	//private LifecycleManagerRegistry lr;
 	
 	
 	public Invoker(long invokerID) {
@@ -24,7 +22,7 @@ public class Invoker {
 		this.invokerID = invokerID;
 		this.marshaller = new Marshaller();
 		this.cdlm = ClientDependentLifecycleManager.getInstance();
-		this.lr = new LifecycleManagerRegistry() ; 
+		//this.lr = new LifecycleManagerRegistry() ; 
 	}
 
 	public Object invoke(String message) throws RemoteError {
@@ -61,12 +59,12 @@ public class Invoker {
 				}
 				else if (methodName.equals("*destroy")) {
 					System.out.println(methodName);
-					return cdlm.rmInstance(objectClass);					
+					return cdlm.invocationDone(objectClass);					
 				} 
 				else {
 					Method method;
 					method = objectClass.getMethod(methodName,	argsT);
-					Object obj = cdlm.getInstance(objectClass, rm.getInvocationData().getObjectID());
+					Object obj = cdlm.invocationArrived(objectClass, rm.getInvocationData().getObjectID());
 					
 					//Long id = rm.getInvocationData().getObjectID();
 					//LifecycleManagerInterface pc = lr.getLifecycleManager(id); 

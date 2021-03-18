@@ -42,7 +42,7 @@ public class InstancePool implements InstancePoolInterface{
 			synchronized (mutex) {
 				result = instance;
 				if (result == null)
-					instance = result = new InstancePool(50);
+					instance = result = new InstancePool(24);
 			}
 		}
 		return result;

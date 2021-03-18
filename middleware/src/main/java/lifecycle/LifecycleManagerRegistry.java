@@ -2,6 +2,7 @@ package lifecycle;
 
 import java.util.concurrent.ConcurrentHashMap;
 
+@Deprecated
 public class LifecycleManagerRegistry {
 	
 	private ConcurrentHashMap<Long, LifecycleManagerInterface> track;

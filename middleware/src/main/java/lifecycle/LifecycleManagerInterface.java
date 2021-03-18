@@ -6,8 +6,8 @@ import basic.server.RemoteObject;
 
 public interface LifecycleManagerInterface {
 
-	public Object invocationArrived(Long id) throws RemoteError;
+	public Object invocationArrived(Class<?> cls, long id) throws RemoteError;
 	
-	public void invocationDone(Long  serv);
+	public Object invocationDone(Class<?> cls);
 
 }

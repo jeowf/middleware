@@ -18,11 +18,13 @@ public class PerRequestLifecycleManager implements LifecycleManagerInterface  {
 		this.instancepool =  InstancePool.getInstance();
 	}
 
-	public void invocationDone(Long id) {	
-		instances.remove(id);
+	public Object invocationArrived(Class<?> cls, long id) throws RemoteError {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public Object invocationArrived(Long id) throws RemoteError {
+	public Object invocationDone(Class<?> cls) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 	

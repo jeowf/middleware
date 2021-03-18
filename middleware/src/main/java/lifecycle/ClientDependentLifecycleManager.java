@@ -8,7 +8,7 @@ import application.User;
 import basic.RemoteError;
 
 // Singleton
-public class ClientDependentLifecycleManager {
+public class ClientDependentLifecycleManager implements LifecycleManagerInterface {
 	private static volatile ClientDependentLifecycleManager instance;
 	private static Object mutex = new Object();
 	private Long contador;
@@ -21,14 +21,14 @@ public class ClientDependentLifecycleManager {
 		this.contador = x;
 	}
 
-	public Object getInstance(Class<?> cls, long id) throws RemoteError{
+	public Object invocationArrived(Class<?> cls, long id) throws RemoteError{
 		if (!instances.containsKey(cls) || !instances.get(cls).containsKey(id))
 			throw new RemoteError(); // instancia nao encontrada
 		
 		return instances.get(cls).get(id);
 	}
 	
-	public Object rmInstance(Class<?> cls) {
+	public Object invocationDone(Class<?> cls) {
 		return instances.remove(cls);
 	}
 	
