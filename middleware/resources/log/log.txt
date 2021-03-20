@@ -8,3 +8,8 @@
 {IdClient: -1; Operation: *constructor; DataTime->Dia 15; DataTime->Mês 3; DataTime->Ano 2021; DataTime->Hora 7:16:5}
 {IdClient: -1; Operation: *constructor; DataTime->Dia 15; DataTime->Mês 3; DataTime->Ano 2021; DataTime->Hora 7:17:27}
 {IdClient: -1; Operation: *constructor; DataTime->Dia 15; DataTime->Mês 3; DataTime->Ano 2021; DataTime->Hora 7:17:27}
+{IdClient: -1; Operation: *constructor; DataTime->Dia 17; DataTime->Mês 3; DataTime->Ano 2021; DataTime->Hora 4:50:54}
+{IdClient: -1; Operation: *constructor; DataTime->Dia 17; DataTime->Mês 3; DataTime->Ano 2021; DataTime->Hora 4:50:54}
+{IdClient: -1; Operation: *constructor; DataTime->Dia 17; DataTime->Mês 3; DataTime->Ano 2021; DataTime->Hora 4:50:54}
+{IdClient: 0; Operation: equals; DataTime->Dia 17; DataTime->Mês 3; DataTime->Ano 2021; DataTime->Hora 5:0:28}
+{IdClient: 0; Operation: equals; DataTime->Dia 17; DataTime->Mês 3; DataTime->Ano 2021; DataTime->Hora 11:54:49}
