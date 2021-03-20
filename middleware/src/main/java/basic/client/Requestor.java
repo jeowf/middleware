@@ -10,6 +10,7 @@ import extension.client.InterceptorRegistryClient;
 import extension.client.InvocationContextClient;
 import general.InvocationData;
 import general.LogDTO;
+import general.LookUpMessage;
 import general.Message;
 import general.RequestorMessage;
 import general.ServerResponseMessage;
@@ -47,15 +48,32 @@ public class Requestor {
 		// Adicionando dados de context de invocação aos dados a serem enviados
 		invocationData.setInvocationContext( invocationContext );
 		
-		RequestorMessage m = new RequestorMessage( requestorID, invocationData );
-		
-		String message = marshaller.marshal(m);
+		//RequestorMessage m = new RequestorMessage( requestorID, invocationData );
+		//String message = marshaller.marshal(m);
 		
 		//System.out.println(message);
 		
-		//encodeMessage (adicionar o ID do invoker na string de mensagem)
-		
-		message = encode(message, 100);
+		String message;
+				
+		// Caso o objectID seja -2, significa que � uma mensagem de lookup, ent�o inseriremos o c�digo do mesmo
+		if(id == -2) 
+		{
+			LookUpMessage m = new LookUpMessage(requestorID, methodName, invocationData);
+			
+			message = marshaller.marshal(m);
+			
+			message = encode(message, 28, 2);
+			
+			System.out.println("Mensagem do lookup:" + message);
+		}
+		else 
+		{
+			RequestorMessage m = new RequestorMessage(requestorID, invocationData);
+			
+			 message = marshaller.marshal(m);
+			//encodeMessage (adicionar o ID do invoker na string de mensagem)
+			message = encode(message, 100, 1);
+		}
 		
 		//System.out.println(message);
 		
@@ -87,9 +105,9 @@ public class Requestor {
 		}		
 	}
 
-	public String encode(String message, long invokerId) {
+	public String encode(String message, long invokerId, long messageType) {
 		StringBuffer text = new StringBuffer(message);
-		text.replace( 0 , 0 , "" + invokerId);
+		text.replace( 0 , 0 , "" + invokerId + "," + messageType);
 		return text.toString();
 	}
 	
