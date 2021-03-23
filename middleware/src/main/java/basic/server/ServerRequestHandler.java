@@ -14,6 +14,7 @@ import java.util.Set;
 
 import basic.Marshaller;
 import basic.RemoteError;
+import extension.server.InvocationContextServer;
 import general.ServerResponseMessage;
 import identification.lookup.LookUp;
 
@@ -142,6 +143,7 @@ public class ServerRequestHandler {
 			long[] codes = decode(data);
 			
 			data = removeIdOfInvoker(data);
+			
 			
 			if(codes[0] == 28) 
 			{

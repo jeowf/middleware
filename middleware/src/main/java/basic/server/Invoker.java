@@ -3,12 +3,23 @@ package basic.server;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Map;
 
 import basic.Marshaller;
 import basic.RemoteError;
+import extension.server.InvocationContextServer;
+import extension.server.InvocationRegistryServer;
+import general.InvocationData;
 import general.RequestorMessage;
+<<<<<<< HEAD
 import lifecycle.ClientDependentLifecycleManager;
 import lifecycle.PerRequestLifecycleManager;
+=======
+import patterns.strategy.InterceptorStrategy;
+import patterns.strategy.LogClientInterceptor;
+import patterns.strategy.LogServerInterceptor;
+>>>>>>> 94501d693f1523ef8c282363926f59c3249ef38e
 
 public class Invoker {
 	private long invokerID;
@@ -45,6 +56,21 @@ public class Invoker {
 			
 			
 			Class<?> objectClass = Class.forName(rm.getInvocationData().getObjectClass());
+
+			// Atualizando InvocationRegistryServer
+			Map<String, List<LogClientInterceptor>> interceptorsReady = rm.getInvocationData().getInvocationContext().getInterceptors();
+			InvocationRegistryServer.addInterceptors( interceptorsReady );
+			//InvocationRegistryServer.setInterceptors( interceptorsReady );
+			
+			// Cria InvocationContext
+			Map<String, List<LogServerInterceptor>> interceptorsRegistry = InvocationRegistryServer.getInterceptors();
+			
+			InvocationContextServer invocationContextServer = new InvocationContextServer();
+			invocationContextServer.setInterceptors( interceptorsRegistry );
+			
+			// Prepara intercetors
+			prepareInvocation( invocationContextServer );
+			
 			
 			//String s = "pão";
 			try {
@@ -98,6 +124,17 @@ public class Invoker {
 		System.out.println("Erro 1");
 		
 		return null;
+	}
+
+	private void prepareInvocation( InvocationContextServer invocationContextServer ) {
+		for( List<LogServerInterceptor> interceptors : invocationContextServer.getInterceptors().values() ) {
+			for( InterceptorStrategy interceptor : interceptors ) {
+				LogServerInterceptor interceptorTemp = (LogServerInterceptor) interceptor;
+				interceptorTemp.writeLog();
+			}
+			
+		}
+		
 	}
 
 	private Object invokeMethod(Object[] args, Method method, Object s) throws RemoteError{
