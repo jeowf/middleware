@@ -12,14 +12,11 @@ import extension.server.InvocationContextServer;
 import extension.server.InvocationRegistryServer;
 import general.InvocationData;
 import general.RequestorMessage;
-<<<<<<< HEAD
 import lifecycle.ClientDependentLifecycleManager;
 import lifecycle.PerRequestLifecycleManager;
-=======
 import patterns.strategy.InterceptorStrategy;
 import patterns.strategy.LogClientInterceptor;
 import patterns.strategy.LogServerInterceptor;
->>>>>>> 94501d693f1523ef8c282363926f59c3249ef38e
 
 public class Invoker {
 	private long invokerID;

@@ -109,7 +109,7 @@ public class Client {
 		Random rand = new Random();
 		
 		//ClientRequestHandler crh = new ClientRequestHandler();
-		
+
 		UserProxy up = new UserProxy();
 		
 		consutarId("User1 Teste", up);

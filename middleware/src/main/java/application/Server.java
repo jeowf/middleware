@@ -28,17 +28,17 @@ public class Server {
 		ServerRequestHandler srh = new ServerRequestHandler();
 		StaticInstance staticInstance = new StaticInstance();
 		
-		
-		
 		addObject(User.class, new User("Nome", "senha", 10.0, 100), "User1 Teste");
 		addObject(User.class, new User("Nome2", "senha2", 12.0, 120), "User2 Teste");
+		User u = new User();
 		
 		try {
-			staticInstance.create();
+			staticInstance.create(u);
 			srh.receive();
 		} catch (RemoteError e) {
 			e.printStackTrace();
 		}
+		
 		
 		System.out.println("Server Ended");
 	}
