@@ -1,4 +1,4 @@
-package basic.server;
+package lifecycle;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,27 +8,27 @@ import application.User;
 import basic.RemoteError;
 
 // Singleton
-public class InstanceList {
-	private static volatile InstanceList instance;
+public class ClientDependentLifecycleManager implements LifecycleManagerInterface {
+	private static volatile ClientDependentLifecycleManager instance;
 	private static Object mutex = new Object();
 	private Long contador;
 	
 	private ConcurrentHashMap<Class<?>, HashMap<Long,Object>> instances;
 		
-	private InstanceList() {
+	private ClientDependentLifecycleManager() {
 		instances = new ConcurrentHashMap<Class<?>, HashMap<Long, Object>>();
 		long x = 0;
 		this.contador = x;
 	}
 
-	public Object getInstance(Class<?> cls, long id) throws RemoteError{
+	public Object invocationArrived(Class<?> cls, long id) throws RemoteError{
 		if (!instances.containsKey(cls) || !instances.get(cls).containsKey(id))
 			throw new RemoteError(); // instancia nao encontrada
 		
 		return instances.get(cls).get(id);
 	}
 	
-	public Object rmInstance(Class<?> cls) {
+	public Object invocationDone(Class<?> cls) {
 		return instances.remove(cls);
 	}
 	
@@ -48,13 +48,13 @@ public class InstanceList {
 		return id;
 	}
 	
-	public static InstanceList getInstance() {
-		InstanceList result = instance;
+	public static ClientDependentLifecycleManager getInstance() {
+		ClientDependentLifecycleManager result = instance;
 		if (result == null) {
 			synchronized (mutex) {
 				result = instance;
 				if (result == null)
-					instance = result = new InstanceList();
+					instance = result = new ClientDependentLifecycleManager();
 			}
 		}
 		return result;

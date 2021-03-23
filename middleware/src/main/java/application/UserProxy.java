@@ -13,6 +13,15 @@ public class UserProxy extends basic.client.ClientProxy{
 			throw new java.io.IOException("Erro ao obter o ID do objeto requisitado");
 		}
 	}
+	
+	public void destroyOBJ(String objType) throws java.io.IOException {
+		try{
+			//requestor.invoke(this.realID, "*destroy" , null, null);
+			requestor.invoke(-3, objType , null, null);
+		} catch (basic.RemoteError e){
+			throw new java.io.IOException("Erro ao remover o objeto");
+		}
+	}
 
 	public void setSaldo(java.lang.Double arg0){
 		try{

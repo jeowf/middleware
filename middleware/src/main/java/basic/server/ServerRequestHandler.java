@@ -162,6 +162,27 @@ public class ServerRequestHandler {
 				myBuffer2.flip();
 				int bytesWritten = myClient.write(myBuffer2);
 			}
+			else if(codes[0] == 29) 
+			{
+				lookup.unbind(data);
+
+				long idObj = -1;
+				
+				logger(String.format("Message Lookup.....: %s\n", data));
+				
+				ServerResponseMessage srm = new ServerResponseMessage();
+				
+				srm.setObject(idObj);
+				
+				Marshaller marshaller = new Marshaller();
+				
+				String message = marshaller.marshal(srm);	
+				
+				ByteBuffer myBuffer2 = ByteBuffer.allocate(BUFFER_SIZE);
+				myBuffer2.put(message.getBytes());
+				myBuffer2.flip();
+				int bytesWritten = myClient.write(myBuffer2);
+			}
 			else 
 			{
 				Invoker invoker = invokerRegistry.getInvoker(-1);

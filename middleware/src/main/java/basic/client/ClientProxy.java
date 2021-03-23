@@ -1,7 +1,7 @@
 package basic.client;
 
 public class ClientProxy {
-	protected long realID;
+	protected long realID = -1;
 	protected Requestor requestor;
 	protected ClientRequestHandler clientRequestHandler;
 

@@ -14,7 +14,7 @@ public class Client {
 
 	private static ArrayList<String> nomes = new ArrayList<String>();
 	
-	// Função para invocar o lookup e consultar um ID
+	// Funï¿½ï¿½o para invocar o lookup e consultar um ID
 	public static boolean consutarId(String objType, UserProxy up) 
 	{
 		try {
@@ -28,13 +28,25 @@ public class Client {
 		
 		return true;
 	}
+
+	
+	public static void destroy(String objType, UserProxy up) {
+		try {
+			up.destroyOBJ(objType);
+		}
+		catch(IOException e) 
+		{
+			System.out.println("Erro Destruindo o objeto");
+		}
+	}
+	
 	
 	public static void main(String[] args) {
 		
 
 		nomes.add("Bruna");
 		nomes.add("Francisco");
-		nomes.add("João");
+		nomes.add("Joï¿½o");
 		nomes.add("Maria");
 		nomes.add("Ana Clara");
 		nomes.add("Roberval");
@@ -56,6 +68,17 @@ public class Client {
 		System.out.println("Primeiro get para user1: " + up.getNome());
 		up.setNome("Carlinhos");
 		System.out.println("Segundo get para user1: " + up.getNome());
+
+		String name = nomes.get(rand.nextInt(10));
+		
+		consutarId(name, up);
+		
+		up.setNome(name);
+		
+		System.out.println(up.getNome());
+		
+		destroy(name, up);
+		//System.out.println(up.getNome());
 		
 		consutarId("User2 Teste", up);
 		

@@ -1,7 +1,10 @@
 package identification.lookup;
 
+import java.util.HashMap;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+import javax.management.ObjectName;
 
 import basic.Marshaller;
 import basic.RemoteError;
@@ -19,7 +22,7 @@ public class LookUp
 	private static volatile LookUp instance;
 	private static Object mutex = new Object();
 		
-	private LookUp() {
+	public LookUp() {
 		this.ids = new ConcurrentHashMap<String, Long>();
 		this.invokerRegistry = InvokerRegistry.getInstance();
 		this.marshaller = new Marshaller();
@@ -37,6 +40,10 @@ public class LookUp
 		return result;
 	}
 	
+	public ConcurrentHashMap<String, Long> getIds(){
+		return ids;
+	}
+	
 	private void printHash() 
 	{
 		Set<String> set = ids.keySet();
@@ -44,7 +51,7 @@ public class LookUp
 		System.out.println("---------- Mostrando as chaves contidas no lookup: ------------");
 		for(String e : set) 
 		{
-			System.out.println("O objeto tipo: " + e + "\nestá associado ao id: " + ids.get(e));
+			System.out.println("O objeto tipo: " + e + "\nestï¿½ associado ao id: " + ids.get(e));
 		}
 		System.out.println("----------------------------------------------------------------");
 	}
@@ -60,23 +67,41 @@ public class LookUp
 			return true;
 		}
 		
-		System.out.println("O objeto fornecido já foi cadastrado!!!");
+		System.out.println("O objeto fornecido jï¿½ foi cadastrado!!!");
 		
 		return false;
 	}
 	
-	public boolean unbind(String objectName) 
+	public boolean unbind(String message) 
 	{
+		LookUpMessage lm = (LookUpMessage) marshaller.unmarshal(message, LookUpMessage.class);
+		String objectName = lm.getObjectType();
 		if(ids.containsKey(objectName)) 
 		{
 			ids.remove(objectName);
+
+			Invoker invoker;
+			try {
+				invoker = invokerRegistry.getInvoker(-1);
+			
+				lm.getInvocationData().setSomeMethod("*destroy");
+				
+				RequestorMessage rm = new RequestorMessage(lm.getId(), lm.getInvocationData());
+				
+				invoker.invoke(marshaller.marshal(rm));
+			} catch (RemoteError e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			printHash();
 			
 			System.out.println("Objeto " + objectName + " removido com sucesso!!!");
 			
 			return true;
 		}
 		
-		System.out.println("Não existe um objeto com o nome " + objectName + " cadastrado");
+		System.out.println("Nï¿½o existe um objeto com o nome " + objectName + " cadastrado");
 		
 		return false;
 	}
@@ -86,8 +111,8 @@ public class LookUp
 		LookUpMessage lm = (LookUpMessage) marshaller.unmarshal(message, LookUpMessage.class);
 		if(ids.containsKey(lm.getObjectType())) 
 		{	
-			
-			//System.out.println("Printando o código dentro da consulta com sucesso");
+
+			System.out.println("Printando o cï¿½digo dentro da consulta com sucesso");
 			printHash();
 			
 			return ids.get(lm.getObjectType());
