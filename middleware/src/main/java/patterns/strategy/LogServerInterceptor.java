@@ -68,7 +68,9 @@ public class LogServerInterceptor extends InterceptorStrategy {
 		builder.append( "}" );
 		
 		String conteudo = builder.toString().trim();
-		String caminhoSaidaArquivo = "/home/bruno/Documentos/BTI/PROGRAMAÇÃO DISTRIBUIDA/projeto_middleware/middleware/middleware/resources/log";
+		//String caminhoSaidaArquivo = "/home/bruno/Documentos/BTI/PROGRAMAÇÃO DISTRIBUIDA/projeto_middleware/middleware/middleware/resources/log";
+		String caminhoSaidaArquivo = "./resources/log";
+		
 		File fArquivo = null;
 		try {
 			/*
