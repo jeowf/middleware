@@ -35,20 +35,20 @@ public class StaticInstance {
 		System.out.println("----------------------------------------------------------------");
 	}
 	
-	public void create() throws RemoteError {
+	public void create(Object obj) throws RemoteError {
 		long id = 0;
 		for(int i = 0; i < 10 ; i++) {
 			String nameObject = "objeto" + String.valueOf(i);
 			print(nameObject);
 			
-			InvocationData staticInvocationData = new InvocationData(id,"*constructor",null,null,String.class.getName());
+			InvocationData staticInvocationData = new InvocationData(id,"*constructor",null,null,obj.getClass().getName());
 			id++;
 			RequestorMessage rm = new RequestorMessage(0,staticInvocationData);
 			String staticMessage = marshaller.marshal(rm);
 			
 			
 			Long idObj = (Long)invoker.invoke(staticMessage);
-			LookUpMessage lm = new LookUpMessage(idObj,String.class.getName(),staticInvocationData);
+			LookUpMessage lm = new LookUpMessage(idObj,obj.getClass().getName(),staticInvocationData);
 			staticMessage = marshaller.marshal(lm);
 			lookUp.lookup(staticMessage);
 			

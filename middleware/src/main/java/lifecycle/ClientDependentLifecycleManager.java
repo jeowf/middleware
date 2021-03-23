@@ -36,11 +36,6 @@ public class ClientDependentLifecycleManager implements LifecycleManagerInterfac
 		if (!instances.containsKey(cls)) {
 			instances.put(cls,new HashMap<Long,Object>());
 		}
-		/*
-		if (instances.get(cls).containsKey(id))
-			throw new RemoteError(); // id em uso
-		*/
-		//Long id = (long) instances.get(cls).size();
 		Long id = contador++;
 		System.out.println("ID : " + id);
 		instances.get(cls).put(id, obj);

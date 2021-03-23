@@ -57,10 +57,6 @@ public class Client {
 		
 		Random rand = new Random();
 		
-		ClientRequestHandler crh = new ClientRequestHandler();
-		
-		Requestor r = new Requestor(crh, String.class);
-		
 		UserProxy up = new UserProxy();
 		
 		String name = nomes.get(rand.nextInt(10));
